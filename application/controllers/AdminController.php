@@ -83,7 +83,7 @@ class AdminController extends Zend_Controller_Action
         $country_id= $this->_request->getParam("id");
 //$city=$city_obj->get_city_obj_by_country_id(1);
 $posts_of_user_id =$country_obj->find_all_country_city($country_id);
-
+        
 
         // foreach ($posts_of_user_id as $key=>$value) {
         //     $cities[$key]['name'] = $value->name;

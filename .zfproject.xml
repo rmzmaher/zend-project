@@ -13,6 +13,13 @@
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="User">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="postr"/>
+          <actionMethod actionName="postcreate"/>
+          <actionMethod actionName="postupdate"/>
+          <actionMethod actionName="postdelete"/>
+          <actionMethod actionName="commentdelete"/>
+          <actionMethod actionName="commentcreate"/>
+          <actionMethod actionName="map"/>
         </controllerFile>
         <controllerFile controllerName="Admin">
           <actionMethod actionName="index"/>
@@ -30,7 +37,9 @@
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Add"/>
-        <formFile formName="Addcity"/>
+        <formFile formName="Addcity"/>          
+        <formFile formName="Addpost"/>
+        <formFile formName="Addcomment"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -40,6 +49,8 @@
       <modelsDirectory>
         <modelFile modelName="Country"/>
         <modelFile modelName="City"/>
+        <modelFile modelName="Post"/>
+        <modelFile modelName="Comment"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
@@ -87,8 +98,34 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="addcity"/>
           </viewControllerScriptsDirectory>
+         <!--  <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="addcity"/> -->
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="postr"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="postr"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="postcreate"/>
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
-            <viewScriptFile forActionName="addcity"/>
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="postupdate"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="postdelete"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="commentdelete"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="commentcreate"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="map"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
