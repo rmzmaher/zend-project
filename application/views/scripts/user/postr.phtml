@@ -1,0 +1,28 @@
+<?php
+//var_dump($this->pos);
+//print_r($this->pos);
+//var_dump($this->com[0]->content);
+//var_dump($this->count);
+foreach ($this->pos as $post) {
+	echo "Title :<h1> " . $post['title'] . "</h1>";
+	echo "Description :<p> " . $post['content'] . "</p>";
+
+	//	if($value['user_id']==){  ////if this user is the user open that page
+			echo "<a class='btn btn-danger' href='postdelete/id/" . $post['id'] . "'>delete</a>";
+			echo "<a class='btn btn-danger' href='postupdate/id/" . $post['id'] . "'>Update</a>";
+		//		}
+
+	//// when only login
+	echo "<br/><a class='btn btn-default' href='commentcreate/id/" . $post['id'] . "'>ADD COMMENT</a>";
+	echo "<input datatype='text' class='comment'>";
+	////////
+	foreach ($this->com as $comment) {
+		if($post['id']== $comment['post_id']) {
+				echo "<br/>comment :<h1> " . $comment['content'] . "</h1>";
+			echo "<a class='btn btn-danger' href='commentdelete/id/" . $comment['id'] . "'>delete</a>";
+
+		}
+	}
+}
+?>
+<script src="/comment.js"></script>
