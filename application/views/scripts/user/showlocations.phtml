@@ -1,0 +1,12 @@
+<?php
+	foreach ($this->paginator as $location) { ?>
+
+
+		<div class='container-fluid'>
+		<h1 align='center'> <?=  $location['name'] ?> </h1>
+		<img src="<?= $location['image'] ?>"   border=0 width=677 height=192>
+		<h3 align='center'> <?= $location['describtion'] ?> </h3>
+		</div>
+	<?php } ?>
+
+<?php echo $this->paginator;?>

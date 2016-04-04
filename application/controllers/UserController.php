@@ -122,7 +122,8 @@ class UserController extends Zend_Controller_Action
 
     public function commentcreateAction()
     {
-        // action body
+     ///using form
+        /*   // action body
         $form = new Application_Form_Addcomment();
         $post_obj = new Application_Model_Post();
         $comment_obj= new Application_Model_Comment();
@@ -139,18 +140,42 @@ class UserController extends Zend_Controller_Action
         }
         //$this->view-> post_to_comment ->$post_obj->getpost_by_postid($id);
         $this->view->myform = $form;
-
+*/
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $req=$this->getRequest();
+        if($req->isPost()){
+            $com_obj=new Application_Model_Comment();
+            $com_obj->create_comment($req->getParams());
+            }
     }
 
     public function mapAction()
     {
         // action body
-        $city_obj = new Application_Model_Comment();
+       // $city_obj = new Application_Model_Comment();
+
+    }
+
+    public function showlocationsAction()
+    {
+        // action body
+        $location_obj=new Application_Model_Location();
+        $locations = $location_obj->getlocations_by_city_id(1);
+        $paginator = Zend_Paginator::factory($locations);
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('/user/pagination.phtml');
+       // var_dump($paginator);die();
+        $paginator->setCurrentPageNumber($this->_getParam('page', 1));
+        $paginator->setItemCountPerPage(2);
+        //var_dump($paginator);
+        $this->view->paginator = $paginator;
 
     }
 
 
 }
+
+
 
 
 

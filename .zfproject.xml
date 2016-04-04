@@ -21,14 +21,17 @@
           <actionMethod actionName="commentdelete"/>
           <actionMethod actionName="commentcreate"/>
           <actionMethod actionName="map"/>
+          <actionMethod actionName="showlocations"/>
         </controllerFile>
         <controllerFile controllerName="Admin">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="addlocation"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Addpost"/>
         <formFile formName="Addcomment"/>
+        <formFile formName="Addlocation"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -38,6 +41,7 @@
       <modelsDirectory>
         <modelFile modelName="Post"/>
         <modelFile modelName="Comment"/>
+        <modelFile modelName="Location"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
@@ -78,6 +82,12 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="map"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="showlocations"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="addlocation"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
