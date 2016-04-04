@@ -13,6 +13,7 @@ class UserController extends Zend_Controller_Action
         // action body
     }
 
+
     public function postrAction()
     {
         // action body
@@ -153,7 +154,10 @@ class UserController extends Zend_Controller_Action
     public function mapAction()
     {
         // action body
-       // $city_obj = new Application_Model_Comment();
+        $city_obj = new Application_Model_City();
+     //from main city page  //$id=$this->_request->getParam('id');
+        $city=$city_obj->one_city(1);
+        $this->view->city = $city;
 
     }
 
@@ -174,20 +178,3 @@ class UserController extends Zend_Controller_Action
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

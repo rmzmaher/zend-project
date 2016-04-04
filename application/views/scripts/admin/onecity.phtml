@@ -1,0 +1,27 @@
+<br /><br />
+<div id="view-content">
+	<table class="table">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>image</th>
+			<th>rate</th>
+			<th>description</th>
+		</tr>
+	</thead>
+	<?php
+		foreach ($this->city as $key => $value)
+		{
+			echo "<tr>".
+"<td>" . $value['id'] . "</td>" .
+"<td>" . $value['name'] . "</td>" .
+"<td>" . $value['image'] . "</td>" .
+"<td>" . $value['rating'] . "</td>" .
+"<td>" . $value['description'] . "</td>" 
+
+."</tr>";
+		}
+	?>
+	</table>
+</div>

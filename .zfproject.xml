@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<projectProfile type="default" version="1.12.17dev">
+<projectProfile type="default" version="1.12.6">
   <projectDirectory>
     <projectProfileFile filesystemName=".zfproject.xml"/>
     <applicationDirectory classNamePrefix="Application_">
@@ -9,7 +9,6 @@
       <controllersDirectory>
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
-          <actionMethod actionName="postr"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="User">
@@ -26,9 +25,21 @@
         <controllerFile controllerName="Admin">
           <actionMethod actionName="index"/>
           <actionMethod actionName="addlocation"/>
+          <actionMethod actionName="allcountry"/>
+          <actionMethod actionName="onecountry"/>
+          <actionMethod actionName="removecountry"/>
+          <actionMethod actionName="addcountry"/>
+          <actionMethod actionName="editcountry"/>
+          <actionMethod actionName="allcity"/>
+          <actionMethod actionName="onecity"/>
+          <actionMethod actionName="removecity"/>
+          <actionMethod actionName="editcity"/>
+          <actionMethod actionName="addcity"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
+        <formFile formName="Add"/>
+        <formFile formName="Addcity"/>          
         <formFile formName="Addpost"/>
         <formFile formName="Addcomment"/>
         <formFile formName="Addlocation"/>
@@ -39,6 +50,8 @@
         </layoutScriptsDirectory>
       </layoutsDirectory>
       <modelsDirectory>
+        <modelFile modelName="Country"/>
+        <modelFile modelName="City"/>
         <modelFile modelName="Post"/>
         <modelFile modelName="Comment"/>
         <modelFile modelName="Location"/>
@@ -56,6 +69,41 @@
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="index"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="index"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="allcountry"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="onecountry"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="removecountry"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="addcountry"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="editcountry"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="allcity"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="onecity"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="removecity"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="editcity"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="addcity"/>
+          </viewControllerScriptsDirectory>
+         <!--  <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="addcity"/> -->
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="postr"/>
           </viewControllerScriptsDirectory>

@@ -43,6 +43,7 @@ class Application_Model_Location extends Zend_Db_Table_Abstract
         $my_data['name'] = $location_data['name'];
         $my_data['image'] = $location_data['image'];
         $my_data['city_id'] = $location_data['city_id'];
+        $my_data['describtion']=$location_data['describtion'];
         $location_id = $location_data['id'];
         //var_dump($my_data);
         // echo $post_id;die();
