@@ -260,19 +260,46 @@ $this->view->$mes=$message;
     public function listAction()
     {
        
+        $user_model = new Application_Model_User();
+        $this->view->user=$user_model->listUsers();
 
 
-$d="hello session";
-        $this->view->d=$d;
+
     }
 
     public function logoutAction()
     {
-        // action body
+        
+
+Zend_Session::namespaceUnset('admin_Auth');
+$this->redirect("/user/login");
+
+
+
+
+
+
+
+    }
+
+    public function blockAction()
+    {
+        
+	$user_model = new Application_Model_User();
+	$us_id = $this->_request->getParam("uid");
+	$user = $user_model->blockUser($us_id);
+	$this->redirect("/admin/list");
+                  
+
+
+
+
     }
 
 
 }
+
+
 
 
 

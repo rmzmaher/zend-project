@@ -233,7 +233,7 @@ return $this->redirect( '/admin/list');
 else
 {
 $message="invalid email or password ";
-$this->view->$mes=$message;
+$this->view->mes=$message;
 
 
 }
@@ -260,10 +260,11 @@ $this->view->$mes=$message;
     public function listAction()
     {
        
+        $user_model = new Application_Model_User();
+        $this->view->user=$user_model->listUsers();
 
 
-$d="hello session";
-        $this->view->d=$d;
+
     }
 
     public function logoutAction()
@@ -281,8 +282,24 @@ $this->redirect("/user/login");
 
     }
 
+    public function blockAction()
+    {
+        
+	$user_model = new Application_Model_User();
+	$us_id = $this->_request->getParam("uid");
+	$user = $user_model->blockUser($us_id);
+	$this->redirect("/admin/list");
+                  
+
+
+
+
+    }
+
 
 }
+
+
 
 
 

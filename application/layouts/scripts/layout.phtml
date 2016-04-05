@@ -65,7 +65,7 @@ if (!empty($sessionRead)) {
 elseif (isset($adminsession->first_name) && !empty (isset($adminsession->first_name))) {
         $name = $adminsession->first_name;
         echo "Welcome " . $name->name;
-        var_dump($name);
+        //var_dump($name);
         ?>
         <a class="btn btn-default navbar-btn" href="<?php echo $this->baseUrl() ?>/admin/logout">
         Logout </a>

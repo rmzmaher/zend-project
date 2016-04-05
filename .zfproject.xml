@@ -49,6 +49,7 @@
           <actionMethod actionName="login"/>
           <actionMethod actionName="list"/>
           <actionMethod actionName="logout"/>
+          <actionMethod actionName="block"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -196,6 +197,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="logout"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="block"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

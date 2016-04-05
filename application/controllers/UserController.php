@@ -323,8 +323,11 @@ class UserController extends Zend_Controller_Action
             else
             {
 
-                echo "<br>" ;
-                echo "invalid email or passsword";
+              
+                $message="invalid email or passsword";
+                $this->view->mes=$message;
+                 
+
             }
             }
 
