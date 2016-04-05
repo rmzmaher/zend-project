@@ -1,40 +1,81 @@
 
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Home | Visit.com</title>
+    <script src="/jquery-1.12.1.min.js"></script>
+    <script src="/bootstrap/js/bootstrap.min.js"></script>
+    <!-- core CSS -->
+    <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-theme.min.css.map" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap.css.map" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+    <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
 
-        <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,300,700,600,500' rel='stylesheet' type='text/css'>
-		<link href='http://fonts.googleapis.com/css?family=Droid+Serif:400,400italic,700' rel='stylesheet' type='text/css'>
+</head> <!--/head-->
+<body>
+<nav class="navbar navbar-default ">
+    <div class="container-fluid" >
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/user/home"><span class="glyphicon glyphicon-home"></span>  Visit ME </a>
+        </div>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
+<?php
+    $auth = Zend_Auth::getInstance();
+    $storage = $auth->getStorage();
+    $adminsession = new Zend_Session_Namespace('admin_Auth');
+    $sessionRead = $storage->read();
+    $fbsession = new Zend_Session_Namespace('facebook');
+if (!empty($sessionRead)) {
+        $name = $sessionRead->username; ?>
 
-        <link rel="stylesheet" href="/css/slicknav.css">
-        <link rel="stylesheet" href="/css/owl.theme.css">
-        <link rel="stylesheet" href="/css/owl.carousel.css">
-        <link rel="stylesheet" href="/css/owl.transitions.css">
-        <link rel="stylesheet" href="/css/font-awesome.min.css">
-        <link rel="stylesheet" href="/css/bootstrap.min.css">
-        <link rel="stylesheet" href="/css/main.css">
-        <link rel="stylesheet" href="/css/responsive.css">
-        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
-    </head>
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
-        <script src="/js/owl.carousel.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/plugins.js"></script>
-        <script src="/js/main.js"></script>
-         <script>
-            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
-            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
-            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
-            e.src='//www.google-analytics.com/analytics.js';
-            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
-            ga('create','UA-XXXXX-X');ga('send','pageview');
-        </script>
+     <ul class="nav navbar-nav navbar-right"><!-- right side data -->
+         <li><a class="navbar-brand"> Welcome <?=$name?></a></li>
+        <li class="dropdown">
+            <a class="btn btn-default navbar-btn" href="<?php echo $this->baseUrl() ?>/User/logout"> Logout </a>
+        </li>
+      </ul>
+<?php
+    }
+    elseif (isset($fbsession->first_name) && !empty (isset($fbsession->first_name))) {
+        $name = $fbsession->first_name;?>
+        <ul class="nav navbar-nav navbar-right"><!-- right side data -->
+            <li><a class="navbar-brand"> Welcome <?=$name?></a></li>
+            <li class="dropdown">
+                <a class="btn btn-default navbar-btn" href="<?php echo $this->baseUrl() ?>/User/fblogout"> Logout </a>
+            </li>
+        </ul>
+<?php
+}
+
+elseif (isset($adminsession->first_name) && !empty (isset($adminsession->first_name))) {
+        $name = $adminsession->first_name;
+        echo "Welcome " . $name->name;
+        //var_dump($name);
+        ?>
+        <a class="btn btn-default navbar-btn" href="<?php echo $this->baseUrl() ?>/admin/logout">
+        Logout </a>
+<?php
+}
+?>
+            </div> <!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+</body>
+
 <?php echo $this->layout()->content; ?>
