@@ -153,8 +153,73 @@ $posts_of_user_id =$country_obj->find_all_country_city($country_id);
         }
     }
 
+    public function gethotelsAction()
+    {
+        $hotel_model=new Application_Model_Hotel();
+        $all_hotels=$hotel_model->listAllHotels();
+        $this->view->hotels=$all_hotels;
+
+    }
+
+    public function updatehotelAction()
+    {
+        $hotel_id= $this->_request->getParam("id");
+        $hotel_model=new Application_Model_Hotel();
+        $hotel=$hotel_model->getOneHotel($hotel_id);
+        $this->view->hotel = $hotel[0]; // send hotel data to the update view
+        $update_form = new Application_Form_Updatehotel();
+        $update_form->populate($hotel[0]);
+        $this->view->updateForm=$update_form;
+
+        $request=$this->getRequest();
+        if($request->isPost())
+        {
+            if($update_form->isValid($request->getPost()))
+            {
+                $hotel_model->updateHotel($_POST,$hotel_id);
+                $this->redirect('/admin/gethotels');
+            }
+        }
+    }
+
+    public function addhotelAction()
+    {
+        $newhotel_form= new Application_Form_Newhotel();
+        $this->view->newhotel=$newhotel_form;
+        $hotel_model=new Application_Model_Hotel();
+        $request=$this->getRequest();
+
+        if($request->isPost())
+        {
+            if($newhotel_form->isValid($request->getPost()))
+            {
+                $hotel_model->addHotel($_POST);
+                $this->redirect('/admin/gethotels');
+                //for test
+                //$this->view->inserteddata=$_POST;
+            }
+        }
+    }
+
+    public function deletehotelAction()
+    {
+        $hotel_id= $this->_request->getParam("id");
+        $hotel_model=new Application_Model_Hotel();
+        $hotel_model->removeHotel($hotel_id);
+        $this->redirect('/admin/gethotels');
+    }
+
+
 
 }
+
+
+
+
+
+
+
+
 
 
 

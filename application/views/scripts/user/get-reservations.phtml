@@ -1,0 +1,47 @@
+<br /><br />
+<div id="view-content">
+	<p>View script for controller <b>Visit</b> and script/action name <b>getReservations</b></p>
+</div>
+<?php
+
+var_dump($this->reservers);
+
+?>
+<table border="1" class="table table-striped table-bordered table-hover">
+	<tr>
+		<th>Name</th>
+		<th>From</th>
+		<th>To</th>
+		<th>Member</th>
+		<th colspan="2">Actions</th>
+	</tr>
+	<?php
+	foreach($this->reservers as $key=>$reserve)
+	{
+		?>
+		<tr>
+			<td>
+				<?= $reserve['name']?>
+
+			</td>
+			<td>
+				<?=$reserve['from']?>
+			</td>
+			<td>
+				<?=$reserve['to']?>
+			</td>
+			<td>
+				<?=$reserve['member']?>
+			</td>
+			<td>
+				<?php echo "<a class='btn btn-warning' href='/user/update-reservation/id/".$reserve['id']."'> Edit </a>";?>
+
+			</td>
+			<td>
+				<?php echo "<a class='btn btn-danger' href='/user/deletereservation/id/".$reserve['id']."'> Delete </a>";?>
+			</td>
+		</tr>
+		<?php
+	}
+	?>
+</table>
