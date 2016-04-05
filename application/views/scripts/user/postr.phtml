@@ -1,45 +1,38 @@
-<?php
-//var_dump($this->pos);
-//print_r($this->pos);
-//var_dump($this->com[0]->content);
-//var_dump($this->count);
-//echo "<table class='table table-bordered table-striped table-hover'>";
-foreach ($this->pos as $post) {
-	echo "<div class='container-fluid'>
-				<div class='container post'>";
-	////// experience
-						echo "<h1 align='center'> " . $post['title'] . "</h1>";
-						echo "<h3 align='center'> " . $post['content'] . "</h3>";
-						$post_id= $post['id'];
-					//	echo $post_id;
-						echo"<input type='hidden' id='pid' value='$post_id'>";
-						//	if($value['user_id']==){  ////if this user is the user open that page
-						echo "<a class='btn btn-danger' href='postdelete/id/" . $post['id'] . "'>delete</a>";
-						echo "<a class='btn btn-warning' href='postupdate/id/" . $post['id'] . "'>Update</a>";
-						//		}
-						//// when only login
-						echo "<br/><a class='btn btn-success addcom' id='$post_id' >ADD COMMENT</a>";
-						echo "<br/><input datatype='text' size='50px' width='100px' id='comment'>";
-						/////
-				echo "</div>";
 
-////////////// comments with delete and update
-				echo "<div class='container maincomment' id='maincomment'>";
-					foreach ($this->com as $comment) {
-						if($post['id']== $comment['post_id']) {
-							echo "<h5> " . $comment['content'] . "</h5>";
-							$comment_id= $comment['id'];
-							//	echo $post_id;
-							echo"<input type='hidden' id='cid' value='$comment_id'>";
-							echo "<a class='btn btn-danger' href='commentdelete/id/" . $comment['id'] . "'>delete</a>";
+<?php foreach ($this->pos as $post) { ?>
+			<div class='container-fluid'>
+				<div class='container post'>
+					<!-- experience -->
+						<h1 align='center'> <?= $post['title'] ?> </h1>
+						<h3 align='center'> <?= $post['content'] ?></h3>
+						<?php $post_id= $post['id']; ?>
+						<input type='hidden' id='pid' value='<?= $post_id?>'>
+						<!--	 //if($value['user_id']==){  ////if this user is the user open that page -->
+							<a class='btn btn-danger' href='postdelete/id/<?= $post['id'] ?> '>delete</a>
+							<a class='btn btn-warning' href='postupdate/id/<?= $post['id'] ?> '>Update</a>
+						<!--		//		} -->
 
-						}
-					}
-					echo "</div>";
-				echo"</div>";
-	}
+						<!--//// when only login -->
+							<br/><a class='btn btn-success addcom' id='<?= $post_id ?>' >ADD COMMENT</a>
+							<br/><input datatype='text' size='50px' width='100px' id='comment'>
+						<!-- } -->
+					</div>
 
-?>
+					<!-- comments with delete and update -->
+				<div class='container maincomment' id='maincomment'>
+					<?php foreach ($this->com as $comment) {
+						if($post['id']== $comment['post_id']) { ?>
+								<h5>  <?= $comment['content'] ?> </h5>
+								<?php $comment_id= $comment['id']; ?>
+								<input type='hidden' id='cid' value='<?= $comment_id ?> '>
+
+							<a class='btn btn-danger' href='commentdelete/id/<?= $comment['id']?> '>delete</a>
+							<?php } ?>
+						<?php } ?>
+				</div>
+			</div>
+<?php } ?>
+
 <script src="/jquery-1.12.1.min.js"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>
 <script src="/comment.js"></script>

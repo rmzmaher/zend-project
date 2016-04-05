@@ -1,7 +1,6 @@
 $(function () {
 var uid=1;
     $(".post").on("click", ".addcom", function () {
-        alert("hna");
         var value = $(this).closest("div").find("#pid").val();
         alert(value);
         var content = $(this).closest("div").find("#comment").val();
