@@ -5,14 +5,29 @@ class AdminController extends Zend_Controller_Action
 
     public function init()
     {
-        /* Initialize action controller here */
+        
+
+
+
+$authorization = Zend_Auth::getInstance();
+$fbsession = new Zend_Session_Namespace('admin_Auth');
+if (!$authorization->hasIdentity() &&
+!isset($fbsession->first_name)) {
+if ($this->_request->getActionName() != 'login' ) {
+$this->redirect("User/login");
+}
+}
+
+
+
+
+
     }
 
     public function indexAction()
     {
         // action body
     }
-
 
     public function addlocationAction()
     {
@@ -165,6 +180,113 @@ class AdminController extends Zend_Controller_Action
                 $this->redirect("/admin/allcity");
             }
         }
+
     }
+
+    public function loginAction()
+    {
+        
+$login_form = new Application_Form_Admin( );
+$this->view->form=$login_form;
+
+if ($this->_request->isPost()) {
+if ($login_form->isValid($this->_request->getPost( ))) {
+
+$email = $this->_request->getParam('email');
+$password = $this->_request->getParam('passwd');
+//echo $email;
+//echo $password;
+// get the default db adapter
+$db = Zend_Db_Table::getDefaultAdapter( );
+//create the auth adapter
+$authAdapter = new Zend_Auth_Adapter_DbTable($db, 'admin', "email",
+'passwd');
+$authAdapter->setIdentity($email);
+$authAdapter->setCredential($password);
+//authenticate
+$result = $authAdapter->authenticate( );
+
+//var_dump($result);
+if ($result->isValid( )) {
+
+$adminsession = new Zend_Session_Namespace('admin_Auth');
+/*
+$auth = admin_Auth::getInstance( );
+//if the user is valid register his info in session
+
+$storage = $auth->getStorage();
+// write in session email & id & first_name
+$storage->write($authAdapter->getResultRowObject(array('email', 'id',
+'name')));
+
+*/
+
+$adminsession->first_name =$authAdapter->getResultRowObject(array('email', 'id',
+'name')); 
+
+// redirect to root index/index
+return $this->redirect( '/admin/list');
+
+
 }
+
+else
+{
+$message="invalid email or password ";
+$this->view->$mes=$message;
+
+
+}
+
+
+
+
+}
+
+
+
+
+
+
+
+    }
+
+
+
+
+
+    }
+
+    public function listAction()
+    {
+       
+
+
+$d="hello session";
+        $this->view->d=$d;
+    }
+
+    public function logoutAction()
+    {
+        
+
+Zend_Session::namespaceUnset('admin_Auth');
+$this->redirect("/user/login");
+
+
+
+
+
+
+
+    }
+
+
+}
+
+
+
+
+
+
 
