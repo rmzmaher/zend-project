@@ -23,7 +23,7 @@ $pswd->setAttribs(Array(
 $email = new Zend_Form_Element_Text('email');
 $email->setLabel('email: ');
 $email->setAttribs(Array(
-'class'=>'form-control'
+'class'=>'form-control ',
 ));
 $email->setRequired();
 
@@ -33,6 +33,9 @@ $email->setRequired();
 
 
 $submit=new Zend_Form_Element_Submit('submit');
+$submit->setAttribs(Array(
+            'class'=>'btn btn-default '
+        ));
 $submit->setvalue('save');
 
 $this->addElements(array($email,$pswd,$submit));

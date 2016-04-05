@@ -1,4 +1,4 @@
-
+<?php $user=$this->user ?>
 <?php foreach ($this->pos as $post) { ?>
 			<div class='container-fluid'>
 				<div class='container post'>
@@ -7,10 +7,10 @@
 						<h3 align='center'> <?= $post['content'] ?></h3>
 						<?php $post_id= $post['id']; ?>
 						<input type='hidden' id='pid' value='<?= $post_id?>'>
-						<!--	 //if($value['user_id']==){  ////if this user is the user open that page -->
+						<?php if($post['user_id']== $user ){ ?>
 							<a class='btn btn-danger' href='postdelete/id/<?= $post['id'] ?> '>delete</a>
 							<a class='btn btn-warning' href='postupdate/id/<?= $post['id'] ?> '>Update</a>
-						<!--		//		} -->
+							<?php } ?>
 
 						<!--//// when only login -->
 							<br/><a class='btn btn-success addcom' id='<?= $post_id ?>' >ADD COMMENT</a>

@@ -5,27 +5,14 @@ class UserController extends Zend_Controller_Action
 
     public function init()
     {
-        
-
- $authorization = Zend_Auth::getInstance();
-        $fbsession = new Zend_Session_Namespace('facebook');
-        if (!$authorization->hasIdentity() &&!isset($fbsession->first_name)) {
-            if ($this->_request->getActionName() != 'login' &&
-                    $this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'fb') {
-                    $this->redirect("User/login");
-                    }
-        }
-
-
-
-
-
-
-
-
-
-
-
+     $authorization = Zend_Auth::getInstance();
+            $fbsession = new Zend_Session_Namespace('facebook');
+            if (!$authorization->hasIdentity() &&!isset($fbsession->first_name)) {
+                if ($this->_request->getActionName() != 'login' &&
+                        $this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'fb') {
+                        $this->redirect("User/login");
+                        }
+            }
 
     }
 
@@ -37,15 +24,20 @@ class UserController extends Zend_Controller_Action
     public function postrAction()
     {
         // action body
+
+        //////////////
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $user=$storage->read();
+        $usr=$user->id;
+        /////////////
         $post_obj = new Application_Model_Post();
         $posts = $post_obj->getposts_by_city_id(1);
         $comment_obj=new Application_Model_Comment();
- ///
-
-       // $comments=$post_obj->getcomments_on_post(1);
         $comments=$comment_obj->get_comments();
         $this->view->pos = $posts;
         $this->view->com=$comments;
+        $this->view->user=$usr;
     }
 
     public function postcreateAction()
@@ -62,6 +54,7 @@ class UserController extends Zend_Controller_Action
         $postData['image']="im3";
         $post_obj->create_post($postData);
 */
+
         $request = $this->getRequest();
 
         if ($request->isPost()) {
@@ -70,7 +63,12 @@ class UserController extends Zend_Controller_Action
                 $load->addFilter('Rename','/var/www/html/zend_pro/public/images/post'.$_POST['title'].'.jpg');
                 $load->receive();
                 //this is to link with city page and userid[session]
-                $_POST['user_id']=1;
+                //////////////
+                $auth = Zend_Auth::getInstance();
+                $storage = $auth->getStorage();
+                $user=$storage->read();
+                $_POST['user_id']=$user->id;
+                /////////////
                 $_POST['city_id']=1;
                 $_POST['image']='/images/post/'.$_POST['title'].'.jpg';
                 $post_obj->create_post($_POST);
@@ -95,7 +93,12 @@ class UserController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost()) {
             if ($form->isValid($request->getPost())) {
-                $_POST['user_id']=1;
+                //////////////
+                $auth = Zend_Auth::getInstance();
+                $storage = $auth->getStorage();
+                $user=$storage->read();
+                $_POST['user_id']=$user->id;
+                /////////////;
                 $_POST['city_id']=1;
                // var_dump( $_POST);die();
                 $post_obj->update_post($_POST);
@@ -168,8 +171,8 @@ class UserController extends Zend_Controller_Action
         $this->_helper->viewRenderer->setNoRender(true);
         $req=$this->getRequest();
         if($req->isPost()){
-            $com_obj=new Application_Model_Comment();
-            $com_obj->create_comment($req->getParams());
+                $com_obj=new Application_Model_Comment();
+                $com_obj->create_comment($req->getParams());
             }
     }
 
@@ -197,37 +200,38 @@ class UserController extends Zend_Controller_Action
         $this->view->paginator = $paginator;
 
     }
-
+/// list users won't be here in admin panel
     public function listAction()
     {
          $user_model = new Application_Model_User();
        $this->view->users = $user_model->listUsers();
     }
 
+    /// signup action
     public function addAction()
     {
         //$this->_helper->layout()->disableLayout(); 
             //$this->_helper->viewRenderer->setNoRender(true);
             $form = new Application_Form_Adduser();
-
             $request = $this->getRequest();
-            $para=$request->getParams();
+         //   $para=$request->getParams();
             //var_dump($para);
 
             if($request->isPost()){
                     if($form->isValid($request->getPost())){
                             $user_model = new Application_Model_User();
                             $user_model-> addNewuser($request->getParams());
-                            $this->redirect('/user/list');
+                            $this->redirect('/user/login');
                             }
             }
 
             $this->view->user_form = $form; 
     }
 
+// update user data
     public function editAction()
     {
-        $form = new Application_Form_Edit ();
+            $form = new Application_Form_Edit ();
             $user_model = new Application_Model_User ();
             $id = $this->_request->getParam('uid');
             $user_data = $user_model-> userDetails ($id)[0];
@@ -249,102 +253,85 @@ class UserController extends Zend_Controller_Action
             }
     }
 
+    /// details
     public function detailsAction()
     {
         $user_model = new Application_Model_User();
-$us_id = $this->_request->getParam("uid");
-$user = $user_model->userDetails($us_id);
+        $us_id = $this->_request->getParam("uid");
+        $user = $user_model->userDetails($us_id);
 
-$this->view->user = $user[0];
+        $this->view->user = $user;
 
     }
 
     public function deleteAction()
     {
-       
- $user_model = new Application_Model_User();
-$us_id = $this->_request->getParam("uid");
-$user = $user_model->userDetails($us_id);
-$user_model->deleteUser($us_id);
 
-$this->redirect("/user/list");
+        $user_model = new Application_Model_User();
+        $us_id = $this->_request->getParam("uid");
+        $user = $user_model->userDetails($us_id);
+        $user_model->deleteUser($us_id);
+
+        $this->redirect("/user/list");
     }
 
     public function blockAction()
     {
-        
-$user_model = new Application_Model_User();
-$us_id = $this->_request->getParam("uid");
-$user = $user_model->blockUser($us_id);
-$this->redirect("/user/list");
-
-
-
-
+        $user_model = new Application_Model_User();
+        $us_id = $this->_request->getParam("uid");
+        $user = $user_model->blockUser($us_id);
+        $this->redirect("/user/list");
     }
 
     public function loginAction()
     {
         
-$login_form = new Application_Form_Login( );
+    $login_form = new Application_Form_Login( );
             $this->view->form=$login_form;
 
             if ($this->_request->isPost()) {
             if ($login_form->isValid($this->_request->getPost( ))) {
 
-            $email = $this->_request->getParam('email');
-            $password = $this->_request->getParam('passwd');
+                $email = $this->_request->getParam('email');
+                $password = $this->_request->getParam('passwd');
 
-            //echo $password;
-            // get the default db adapter
-            $db = Zend_Db_Table::getDefaultAdapter( );
-            //create the auth adapter
-            $authAdapter = new Zend_Auth_Adapter_DbTable($db, 'user', "email",
-            'passwd');
-            $authAdapter->setIdentity($email);
-            $authAdapter->setCredential($password);
-            //authenticate
-            $result = $authAdapter->authenticate( );
+                //echo $password;
+                // get the default db adapter
+                $db = Zend_Db_Table::getDefaultAdapter( );
+                //create the auth adapter
+                $authAdapter = new Zend_Auth_Adapter_DbTable($db, 'user', "email",
+                'passwd');
+                $authAdapter->setIdentity($email);
+                $authAdapter->setCredential($password);
+                //authenticate
+                $result = $authAdapter->authenticate( );
 
 
             if ($result->isValid( )) {
 
 
-            $auth = Zend_Auth::getInstance( );
-            //if the user is valid register his info in session
-            $auth = Zend_Auth::getInstance();
-            $storage = $auth->getStorage();
-            // write in session email & id & first_name
-            $storage->write($authAdapter->getResultRowObject(array('email', 'id',
-            'username')));
-            // redirect to root index/index
-            return $this->redirect( '/user/list');
-
-
+                $auth = Zend_Auth::getInstance( );
+                //if the user is valid register his info in session
+                $auth = Zend_Auth::getInstance();
+                $storage = $auth->getStorage();
+                // write in session email & id & first_name
+                $storage->write($authAdapter->getResultRowObject(array('email', 'id',
+                'username')));
+                // redirect to root index/index
+                return $this->redirect( '/user/list');
             }
-
             else
             {
 
-            echo "<br>" ;
-            echo "invalid email or passsword";
+                echo "<br>" ;
+                echo "invalid email or passsword";
             }
-
-
-
-
             }
-
-
-
-
-
-
 
 
     }
 
- $fb = new Facebook\Facebook([
+    $fb = new Facebook\Facebook([
             'app_id' => '1053124444745810', // Replace {app-id} with your app id
             'app_secret' => 'f59c1160c1b299e2201e223fd09cdb85',
             'default_graph_version' => 'v2.2',
@@ -358,27 +345,26 @@ $login_form = new Application_Form_Login( );
     public function fbAction()
     {
         $fb = new Facebook\Facebook([
-'app_id' => '1053124444745810', // Replace {app-id} with your app id
-'app_secret' => 'f59c1160c1b299e2201e223fd09cdb85',
-'default_graph_version' => 'v2.2',
-]);
+            'app_id' => '1053124444745810', // Replace {app-id} with your app id
+            'app_secret' => 'f59c1160c1b299e2201e223fd09cdb85',
+            'default_graph_version' => 'v2.2',
+            ]);
 
-$helper = $fb->getRedirectLoginHelper();
+        $helper = $fb->getRedirectLoginHelper();
 
-try {
-$accessToken = $helper->getAccessToken();
-
-}
-catch (Facebook\Exceptions\FacebookResponseException $e) {
-// When Graph returns an error (headers link)
-echo 'Graph returned an error: ' . $e->getMessage();
-Exit;
-}
-catch (Facebook\Exceptions\FacebookSDKException $e) {
- //When validation fails or other local issues
-echo 'Facebook SDK returned an error: ' . $e->getMessage();
-Exit;
-}
+        try {
+        $accessToken = $helper->getAccessToken();
+        }
+        catch (Facebook\Exceptions\FacebookResponseException $e) {
+        // When Graph returns an error (headers link)
+        echo 'Graph returned an error: ' . $e->getMessage();
+        Exit;
+        }
+        catch (Facebook\Exceptions\FacebookSDKException $e) {
+         //When validation fails or other local issues
+        echo 'Facebook SDK returned an error: ' . $e->getMessage();
+        Exit;
+        }
 #####################################################################
 if (!isset($accessToken)) {
 if ($helper->getError()) {
@@ -445,21 +431,13 @@ Zend_Auth::getInstance()->clearIdentity();
         $this->redirect('/user/login');
 
 
-
-
-
-
     }
 
     public function fblogoutAction()
     {
-        
 
  Zend_Session::namespaceUnset('facebook');
         $this->redirect("/user/login");
-
-
-
 
     }
 
