@@ -1,7 +1,8 @@
 <?php
 
 class AdminController extends Zend_Controller_Action
-{
+{ 
+    public $country_id;
 
     public function init()
     {
@@ -48,7 +49,7 @@ class AdminController extends Zend_Controller_Action
             {
                 $load =new Zend_File_Transfer_Adapter_Http();
                 //$image=$_FILES['image']['name'];
-                $load->addFilter('Rename','/var/www/html/visit/public/images/country/'.$_POST['name'].'.jpg');
+                $load->addFilter('Rename','/var/www/html/zend_pro/public/images/country/'.$_POST['name'].'.jpg');
                 $load->receive();
                 $_POST['image']='/images/country/'.$_POST['name'].'.jpg';
                 $country_obj->add_country($_POST);
@@ -81,18 +82,11 @@ class AdminController extends Zend_Controller_Action
         $city_obj= new Application_Model_City();
         $country_obj= new Application_Model_Country();
         $country_id= $this->_request->getParam("id");
+        //$try=$country_id;
 //$city=$city_obj->get_city_obj_by_country_id(1);
 $posts_of_user_id =$country_obj->find_all_country_city($country_id);
-        
-
-        // foreach ($posts_of_user_id as $key=>$value) {
-        //     $cities[$key]['name'] = $value->name;
-        //     $cities[$key]['description'] = $value->description;
-        // }
-
-        // $this->view->posts= $posts;
-        // $all_city= $city_obj->all_city($country_id);
         $this->view->cities = $posts_of_user_id;
+        //return $try;
     }
 
     public function onecityAction()
@@ -108,7 +102,7 @@ $posts_of_user_id =$country_obj->find_all_country_city($country_id);
         $city_obj= new Application_Model_City();
         $city_id= $this->_request->getParam("id");
         $one_city= $city_obj->remove_city($city_id);
-        $this->redirect("/admin/allcity");
+        $this->redirect("/admin/allcontry");
     }
 
     public function editcityAction()
@@ -124,8 +118,14 @@ $posts_of_user_id =$country_obj->find_all_country_city($country_id);
         {
             if($form->isValid($request->getPost()))
             {
+                $load =new Zend_File_Transfer_Adapter_Http();
+                $load->addFilter('Rename','/var/www/html/zend_pro/public/images/city/'.$_POST['name'].'.jpg');
+                $load->receive();
+                $_POST['image']='/images/city/'.$_POST['name'].'.jpg';
+                $_POST['country_id']=$country_id;
                 $city_obj->edit_city($city_id,$_POST);
-                $this->redirect("/admin/allcity");
+            
+                $this->redirect("/admin/allcountry");
             }
         }
     }
@@ -143,12 +143,12 @@ $posts_of_user_id =$country_obj->find_all_country_city($country_id);
             {
                 $load =new Zend_File_Transfer_Adapter_Http();
                 //$image=$_FILES['image']['name'];
-                $load->addFilter('Rename','/var/www/html/visit/public/images/city/'.$_POST['name'].'.jpg');
+                $load->addFilter('Rename','/var/www/html/zend_pro/public/images/city/'.$_POST['name'].'.jpg');
                 $load->receive();
                 $_POST['image']='/images/city/'.$_POST['name'].'.jpg';
                 $_POST['country_id']=$country_id;
                 $city_obj->add_city($_POST);
-                $this->redirect("/admin/allcity");
+                $this->redirect("/admin/allcountry");
             }
         }
     }

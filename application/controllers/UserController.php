@@ -13,7 +13,6 @@ class UserController extends Zend_Controller_Action
         // action body
     }
 
-
     public function postrAction()
     {
         // action body
@@ -150,8 +149,59 @@ class UserController extends Zend_Controller_Action
 
     }
 
+    public function listcountryAction()
+    {
+        $country_obj= new Application_Model_Country();
+        $city_obj= new Application_Model_City();
+        $country_id=$this->_request->getParam("id");
+        $one_country=$country_obj->one_country($country_id);
+         $this->view->country = $one_country;
+         $posts_of_user_id =$country_obj->find_all_country_city($country_id);
+        $this->view->cities = $posts_of_user_id;
+        
+        // $all_city= $city_obj->all_city($country_id);
+        // $this->view->country = $one_country;
+        // $this->view->cities = $all_city;
+    }
+
+    public function listcityAction()
+    {
+        $city_obj= new Application_Model_City();
+        $country_obj= new Application_Model_Country();
+        $country_id= $this->_request->getParam("id");
+        $posts_of_user_id =$country_obj->find_all_country_city($country_id);
+        $this->view->cities = $posts_of_user_id;
+    }
+
+    public function citydataAction()
+    {
+         $city_obj= new Application_Model_City();
+        $city_id= $this->_request->getParam("id");
+        $one_city= $city_obj->one_city($city_id);
+        $this->view->city = $one_city;
+    }
+
+    public function homeAction()
+    {
+        $country_obj= new Application_Model_Country();
+        $city_obj= new Application_Model_City();
+        $all_country= $country_obj->all_country();
+        $this->view->countries = $all_country;
+
+        $all_city= $city_obj->listcity();
+        $this->view->cities = $all_city;
+    }
+
 
 }
+
+
+
+
+
+
+
+
 
 
 

@@ -20,6 +20,10 @@
           <actionMethod actionName="commentdelete"/>
           <actionMethod actionName="commentcreate"/>
           <actionMethod actionName="map"/>
+          <actionMethod actionName="listcountry"/>
+          <actionMethod actionName="listcity"/>
+          <actionMethod actionName="citydata"/>
+          <actionMethod actionName="home"/>
         </controllerFile>
         <controllerFile controllerName="Admin">
           <actionMethod actionName="index"/>
@@ -37,7 +41,7 @@
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Add"/>
-        <formFile formName="Addcity"/>          
+        <formFile formName="Addcity"/>
         <formFile formName="Addpost"/>
         <formFile formName="Addcomment"/>
       </formsDirectory>
@@ -98,8 +102,6 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="addcity"/>
           </viewControllerScriptsDirectory>
-         <!--  <viewControllerScriptsDirectory forControllerName="Admin">
-            <viewScriptFile forActionName="addcity"/> -->
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="postr"/>
           </viewControllerScriptsDirectory>
@@ -126,6 +128,18 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="map"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="listcountry"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="listcity"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="citydata"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="home"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
