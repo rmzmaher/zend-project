@@ -9,6 +9,7 @@
       <controllersDirectory>
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
+          <actionMethod actionName="list"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="User">
@@ -21,6 +22,16 @@
           <actionMethod actionName="commentcreate"/>
           <actionMethod actionName="map"/>
           <actionMethod actionName="showlocations"/>
+          <actionMethod actionName="list"/>
+          <actionMethod actionName="add"/>
+          <actionMethod actionName="edit"/>
+          <actionMethod actionName="details"/>
+          <actionMethod actionName="delete"/>
+          <actionMethod actionName="block"/>
+          <actionMethod actionName="login"/>
+          <actionMethod actionName="fb"/>
+          <actionMethod actionName="logout"/>
+          <actionMethod actionName="fblogout"/>
         </controllerFile>
         <controllerFile controllerName="Admin">
           <actionMethod actionName="index"/>
@@ -35,14 +46,21 @@
           <actionMethod actionName="removecity"/>
           <actionMethod actionName="editcity"/>
           <actionMethod actionName="addcity"/>
+          <actionMethod actionName="login"/>
+          <actionMethod actionName="list"/>
+          <actionMethod actionName="logout"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
         <formFile formName="Add"/>
-        <formFile formName="Addcity"/>          
+        <formFile formName="Addcity"/>
         <formFile formName="Addpost"/>
         <formFile formName="Addcomment"/>
         <formFile formName="Addlocation"/>
+        <formFile formName="Login"/>
+        <formFile formName="Edit"/>
+        <formFile formName="Admin"/>
+        <formFile formName="Adduser"/>
       </formsDirectory>
       <layoutsDirectory>
         <layoutScriptsDirectory>
@@ -55,6 +73,8 @@
         <modelFile modelName="Post"/>
         <modelFile modelName="Comment"/>
         <modelFile modelName="Location"/>
+        <modelFile modelName="User"/>
+        <modelFile modelName="Admin"/>
       </modelsDirectory>
       <modulesDirectory enabled="false"/>
       <servicesDirectory enabled="false"/>
@@ -102,8 +122,6 @@
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="addcity"/>
           </viewControllerScriptsDirectory>
-         <!--  <viewControllerScriptsDirectory forControllerName="Admin">
-            <viewScriptFile forActionName="addcity"/> -->
           <viewControllerScriptsDirectory forControllerName="Index">
             <viewScriptFile forActionName="postr"/>
           </viewControllerScriptsDirectory>
@@ -136,6 +154,48 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="addlocation"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="list"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="list"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="add"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="edit"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="details"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="delete"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="block"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="login"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="fb"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="logout"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="fblogout"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="login"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="list"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="logout"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
