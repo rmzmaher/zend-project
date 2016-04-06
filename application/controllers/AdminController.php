@@ -7,14 +7,20 @@ class AdminController extends Zend_Controller_Action
     public function init()
     {
 
-    $authorization = Zend_Auth::getInstance();
-    $fbsession = new Zend_Session_Namespace('admin_Auth');
-    if (!$authorization->hasIdentity() &&
-    !isset($fbsession->first_name)) {
-    if ($this->_request->getActionName() != 'login' ) {
-    $this->redirect("admin/login");
-    }
-    }
+
+   Zend_Auth::getInstance()->clearIdentity();
+    
+
+$adminsession = new Zend_Session_Namespace('admin_Auth');
+//var_dump($adminsession->first_name);
+//if (!isset($fbsession->first_name)) {
+ if(!isset($adminsession->first_name)){
+if ($this->_request->getActionName() != 'login' ) {
+$this->redirect("admin/login");
+
+}
+}
+
 
     }
 
