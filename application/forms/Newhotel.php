@@ -3,7 +3,9 @@
 class Application_Form_Newhotel extends Zend_Form
 {
 
-    public function init($country_id)
+    static $country_id;
+
+    public function init()
     {
         /* Form Elements & Other Definitions Here ... */
 
@@ -52,10 +54,10 @@ class Application_Form_Newhotel extends Zend_Form
         ));
         /******************** change when city model is here *****************************/
 
-        $city = new Zend_Form_Element_Select('city_id');
+        $city = new Zend_Form_Element_Select('city');
         $city->setAttrib('class' ,'form-control');
         $city_obj= new Application_Model_City();
-        $all_cities =$city_obj->all_city($country_id);
+        $all_cities =$city_obj->all_city(self::$country_id);
         foreach ($all_cities as $key=>$value)
         {
             $city->addMultiOption($value['id'],$value['name']);
@@ -86,5 +88,6 @@ class Application_Form_Newhotel extends Zend_Form
             $submit
         ));
     }
+
 }
 

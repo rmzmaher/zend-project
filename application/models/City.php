@@ -17,10 +17,10 @@ class Application_Model_City extends Zend_Db_Table_Abstract
 
 	function all_city($country_id)
 	{
-//		$query=$this->select();
-//		$query->where("country_id=$country_id");
-//		return $this->fetchAll($query)->toArray();
-		return $this->find($country_id)->toArray();
+		$query=$this->select();
+		$query->where("country_id=$country_id");
+		return $this->fetchAll($query)->toArray();
+//		return $this->find($country_id)->toArray();
 	}
 	function one_city($id)
 	{

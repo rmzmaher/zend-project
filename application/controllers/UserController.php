@@ -520,7 +520,7 @@ Zend_Session::namespaceUnset('admin_Auth');
     public function loginAction()
     {
         
-    $login_form = new Application_Form_Login( );
+            $login_form = new Application_Form_Login( );
             $this->view->form=$login_form;
 
             if ($this->_request->isPost()) {
@@ -603,59 +603,59 @@ Zend_Session::namespaceUnset('admin_Auth');
         Exit;
         }
 #####################################################################
-if (!isset($accessToken)) {
-if ($helper->getError()) {
-header('HTTP/1.0 401 Unauthorized');
-echo "Error: " . $helper->getError() . "\n";
-echo "Error Code: " . $helper->getErrorCode() . "\n";
-echo "Error Reason: " . $helper->getErrorReason() . "\n";
-echo "Error Description: " . $helper->getErrorDescription() .
-"\n";
-}
-else {
-header('HTTP/1.0 400 Bad Request');
-echo 'Bad request';
-}
-Exit;
-}
+        if (!isset($accessToken)) {
+        if ($helper->getError()) {
+        header('HTTP/1.0 401 Unauthorized');
+        echo "Error: " . $helper->getError() . "\n";
+        echo "Error Code: " . $helper->getErrorCode() . "\n";
+        echo "Error Reason: " . $helper->getErrorReason() . "\n";
+        echo "Error Description: " . $helper->getErrorDescription() .
+        "\n";
+        }
+        else {
+        header('HTTP/1.0 400 Bad Request');
+        echo 'Bad request';
+        }
+        Exit;
+        }
 
 #####################################################
-$oAuth2Client = $fb-> getOAuth2Client ();
-//check if access token expired
-if (!$accessToken-> isLongLived ()) {
-// Exchanges a short-lived access token for a long-lived one
-try {
-/// try to get another access token
-$accessToken = $oAuth2Client-> getLongLivedAccessToken ($accessToken);
-}
-catch (Facebook\Exceptions\FacebookSDKException $e) {
-echo "<p>Error getting long-lived access token: " . $helper->getMessage () . "</p>\n\n";
-Exit;
-}
-}
+        $oAuth2Client = $fb-> getOAuth2Client ();
+        //check if access token expired
+        if (!$accessToken-> isLongLived ()) {
+        // Exchanges a short-lived access token for a long-lived one
+        try {
+        /// try to get another access token
+        $accessToken = $oAuth2Client-> getLongLivedAccessToken ($accessToken);
+        }
+        catch (Facebook\Exceptions\FacebookSDKException $e) {
+        echo "<p>Error getting long-lived access token: " . $helper->getMessage () . "</p>\n\n";
+        Exit;
+        }
+        }
 
 #####################################################
 //Sets the default fallback access token so we don't have to pass it to each request
-$fb->setDefaultAccessToken($accessToken);
-try {
-$response = $fb->get('/me');
-$userNode = $response->getGraphUser();
-}
-catch (Facebook\Exceptions\FacebookResponseException $e) {
-// When Graph returns an error
-echo 'Graph returned an error: ' . $e->getMessage();
-Exit;
-}
-catch (Facebook\Exceptions\FacebookSDKException $e) {
- //When validation fails or other local issues
-echo 'Facebook SDK returned an error: ' . $e->getMessage();
-Exit;
-}
-$fpsession = new Zend_Session_Namespace('facebook');
-// write in session email & id & first_name
-$fpsession->first_name= $userNode->getName();
+        $fb->setDefaultAccessToken($accessToken);
+        try {
+        $response = $fb->get('/me');
+        $userNode = $response->getGraphUser();
+        }
+        catch (Facebook\Exceptions\FacebookResponseException $e) {
+        // When Graph returns an error
+        echo 'Graph returned an error: ' . $e->getMessage();
+        Exit;
+        }
+        catch (Facebook\Exceptions\FacebookSDKException $e) {
+         //When validation fails or other local issues
+        echo 'Facebook SDK returned an error: ' . $e->getMessage();
+        Exit;
+        }
+        $fpsession = new Zend_Session_Namespace('facebook');
+        // write in session email & id & first_name
+        $fpsession->first_name= $userNode->getName();
 
-$this->redirect('/user/list');
+        $this->redirect('/user/list');
 
 
     }
@@ -664,16 +664,15 @@ $this->redirect('/user/list');
     {
         
 
-Zend_Auth::getInstance()->clearIdentity();
+        Zend_Auth::getInstance()->clearIdentity();
         $this->redirect('/user/login');
-
 
     }
 
     public function fblogoutAction()
     {
 
- Zend_Session::namespaceUnset('facebook');
+         Zend_Session::namespaceUnset('facebook');
         $this->redirect("/user/login");
 
     }
