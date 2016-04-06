@@ -1,0 +1,34 @@
+<h1 align="center">Car Rents</h1>
+<table border="1" class="table table-striped table-bordered table-hover">
+	<tr>
+		<th>Location</th>
+		<th>From</th>
+		<th>To</th>
+		<th colspan="2">Actions</th>
+	</tr>
+	<?php
+	foreach($this->rents as $key=>$rent)
+	{
+		?>
+		<tr>
+			<td>
+				<?=$rent['location']?>
+			</td>
+			<td>
+				<?=$rent['from']?>
+			</td>
+			<td>
+				<?=$rent['to']?>
+			</td>
+			<td>
+				<?php echo "<a class='btn btn-warning' href='/user/updaterent/id/".$rent['id']."'> Edit </a>";?>
+
+			</td>
+			<td>
+				<?php echo "<a class='btn btn-danger' href='/user/deleterent/id/".$rent['id']."'> Delete </a>";?>
+			</td>
+		</tr>
+		<?php
+	}
+	?>
+</table>

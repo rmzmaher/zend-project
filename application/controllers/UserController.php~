@@ -5,9 +5,6 @@ class UserController extends Zend_Controller_Action
 
     public function init()
     {
-
-$admin = new Zend_Session_Namespace('admin_Auth');
-Zend_Session::namespaceUnset('admin_Auth');
      $authorization = Zend_Auth::getInstance();
             $fbsession = new Zend_Session_Namespace('facebook');
             if (!$authorization->hasIdentity() &&!isset($fbsession->first_name)) {
@@ -16,10 +13,7 @@ Zend_Session::namespaceUnset('admin_Auth');
                         $this->redirect("User/login");
                         }
             }
-            $country_obj= new Application_Model_Country();
-        
-        $all_country= $country_obj->all_country();
-        $this->view->countries = $all_country;
+
     }
 
     public function indexAction()
@@ -39,10 +33,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $name=$user->username;
         ////////posts/////
         $post_obj = new Application_Model_Post();
-        // geting city_id
-        $city_id= $this->_request->getParam('id');
-
-        $posts = $post_obj->getposts_by_city_id($city_id);
+        $posts = $post_obj->getposts_by_city_id(1);
         /////comments///
         $comment_obj=new Application_Model_Comment();
         $comments=$comment_obj->get_comments();
@@ -50,7 +41,6 @@ Zend_Session::namespaceUnset('admin_Auth');
         $users= new Application_Model_User();
         $pos_usr=$users->listUsers();
 
-        $this->view->city_id=$city_id;
         $this->view->name=$name;
         $this->view->pos_usr=$pos_usr;
         $this->view->pos = $posts;
@@ -87,13 +77,10 @@ Zend_Session::namespaceUnset('admin_Auth');
                 $user=$storage->read();
                 $_POST['user_id']=$user->id;
                 /////////////
-                // geting city_id
-                $city_id= $this->_request->getParam('id');
-
-                $_POST['city_id']=$city_id;
+                $_POST['city_id']=1;
                 $_POST['image']='/images/post/'.$_POST['title'].'.jpg';
                 $post_obj->create_post($_POST);
-                $this->redirect('/user/postr/id/'.$city_id.'');
+                $this->redirect('/user/postr');
             }
         }
         $this->view->myform = $form;
@@ -120,12 +107,10 @@ Zend_Session::namespaceUnset('admin_Auth');
                 $user=$storage->read();
                 $_POST['user_id']=$user->id;
                 /////////////;
-                // geting city_id
-                $city_id= $this->_request->getParam('cityid');
-                $_POST['city_id']=$city_id;
+                $_POST['city_id']=1;
                // var_dump( $_POST);die();
                 $post_obj->update_post($_POST);
-                $this->redirect('/user/postr/id/'.$city_id.'');
+                $this->redirect('/user/postr');
             }
         }
           /*
@@ -150,10 +135,9 @@ Zend_Session::namespaceUnset('admin_Auth');
         $id = $this->_request->getParam('id');
         //echo "$id";
         $post_obj->delete_post($id);
-        // geting city_id
-        $city_id= $this->_request->getParam('cityid');
 
-        $this->redirect('/user/postr/id/'.$city_id.'');
+
+        $this->redirect('/user/postr');
 
         //test case
      //   $post_obj = new Application_Model_Post();
@@ -203,23 +187,18 @@ Zend_Session::namespaceUnset('admin_Auth');
     public function mapAction()
     {
         // action body
-        // geting city_id
-        $city_id= $this->_request->getParam('id');
-        /////
         $city_obj = new Application_Model_City();
      //from main city page  //$id=$this->_request->getParam('id');
-        $city=$city_obj->one_city($city_id);
+        $city=$city_obj->one_city(1);
         $this->view->city = $city;
+
     }
 
     public function showlocationsAction()
     {
         // action body
         $location_obj=new Application_Model_Location();
-        // geting city_id
-        $city_id= $this->_request->getParam('id');
-
-        $locations = $location_obj->getlocations_by_city_id($city_id);
+        $locations = $location_obj->getlocations_by_city_id(1);
         $paginator = Zend_Paginator::factory($locations);
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('/user/pagination.phtml');
        // var_dump($paginator);die();
@@ -282,7 +261,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
     }
 
-    /// details of user
+    /// details
     public function detailsAction()
     {
         $user_model = new Application_Model_User();
@@ -304,16 +283,15 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->redirect("/user/list");
     }
 
-///country main page
+
     public function listcountryAction()
     {
         $country_obj= new Application_Model_Country();
+        $city_obj= new Application_Model_City();
         $country_id=$this->_request->getParam("id");
         $one_country=$country_obj->one_country($country_id);
-
          $this->view->country = $one_country;
-
-        $posts_of_user_id =$country_obj->find_all_country_city($country_id);
+         $posts_of_user_id =$country_obj->find_all_country_city($country_id);
         $this->view->cities = $posts_of_user_id;
         
         // $all_city= $city_obj->all_city($country_id);
@@ -330,25 +308,13 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->view->cities = $posts_of_user_id;
     }
 
-//city main page
-
     public function citydataAction()
     {
-        // user
-        $auth = Zend_Auth::getInstance();
-        $storage = $auth->getStorage();
-        $user=$storage->read();
-        $user_id=$user->id;
-        $this->view->user=$user_id;
-        //
-        $city_obj= new Application_Model_City();
+         $city_obj= new Application_Model_City();
         $city_id= $this->_request->getParam("id");
         $one_city= $city_obj->one_city($city_id);
         $this->view->city = $one_city;
-
-
     }
-
 
     public function homeAction()
     {
@@ -356,32 +322,22 @@ Zend_Session::namespaceUnset('admin_Auth');
         $city_obj= new Application_Model_City();
         $all_country= $country_obj->all_country();
         $this->view->countries = $all_country;
-        //return $all_country;
 
         $all_city= $city_obj->listcity();
         $this->view->cities = $all_city;
-        $country = new Zend_Session_Namespace('country');
-        $country = $all_country;
     }
-
 
     public function makeReservationAction()
     {
-        /// user
         $auth = Zend_Auth::getInstance();
         $storage = $auth->getStorage();
         $user=$storage->read();
         $user_id=$user->id;
-        $id=$this->_request->getParam('cid');
-        ///reservation form
+
         $HreservForm=new Application_Form_HotelReservation();
-        $HreservForm->setId($id);
-        $HreservForm->setHotels();
-        ////
         $this->view->hotelreservform=$HreservForm;
         //$user_id= $this->_request->getParam("id");
 
-        /////////////////////
         $request=$this->getRequest();
         $hotelReservation_model = new Application_Model_HotelReservation();
         if($request->isPost()){
@@ -399,7 +355,6 @@ Zend_Session::namespaceUnset('admin_Auth');
         }
     }
 
-//// hotel reserve
     public function getReservationsAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -412,7 +367,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $reservs=$model->getUserReservation($user_id);
         $this->view->reservers=$reservs;
     }
-/// make reservation
+
     public function makeCarReservAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -437,7 +392,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-// get car reservation
+
     public function getCarReservationAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -450,7 +405,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $rents=$carReservModel->getUserReservation($user_id);
         $this->view->rents=$rents;
     }
-/// update rent
+
     public function updateRentAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -476,7 +431,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-//delete rent
+
     public function deleterentAction()
     {
 
@@ -493,7 +448,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $model->cancelReservation($rent_id);
         $this->redirect('/visit/get-car-reservation');
     }
-/// update reservation
+
     public function updateReservationAction()
     {
         $reservation_id= $this->_request->getParam("id");
@@ -531,7 +486,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-//delete reservation
+
     public function deletereservationAction()
     {
         $reservation_id= $this->_request->getParam("id");
@@ -558,11 +513,11 @@ Zend_Session::namespaceUnset('admin_Auth');
     //     $this->redirect("/user/list");
     // }
 
-/// login function
+
     public function loginAction()
     {
         
-            $login_form = new Application_Form_Login( );
+    $login_form = new Application_Form_Login( );
             $this->view->form=$login_form;
 
             if ($this->_request->isPost()) {
@@ -594,7 +549,7 @@ Zend_Session::namespaceUnset('admin_Auth');
                 $storage->write($authAdapter->getResultRowObject(array('email', 'id',
                 'username')));
                 // redirect to root index/index
-                return $this->redirect( '/user/home');
+                return $this->redirect( '/user/list');
             }
             else
             {
@@ -645,59 +600,59 @@ Zend_Session::namespaceUnset('admin_Auth');
         Exit;
         }
 #####################################################################
-        if (!isset($accessToken)) {
-        if ($helper->getError()) {
-        header('HTTP/1.0 401 Unauthorized');
-        echo "Error: " . $helper->getError() . "\n";
-        echo "Error Code: " . $helper->getErrorCode() . "\n";
-        echo "Error Reason: " . $helper->getErrorReason() . "\n";
-        echo "Error Description: " . $helper->getErrorDescription() .
-        "\n";
-        }
-        else {
-        header('HTTP/1.0 400 Bad Request');
-        echo 'Bad request';
-        }
-        Exit;
-        }
+if (!isset($accessToken)) {
+if ($helper->getError()) {
+header('HTTP/1.0 401 Unauthorized');
+echo "Error: " . $helper->getError() . "\n";
+echo "Error Code: " . $helper->getErrorCode() . "\n";
+echo "Error Reason: " . $helper->getErrorReason() . "\n";
+echo "Error Description: " . $helper->getErrorDescription() .
+"\n";
+}
+else {
+header('HTTP/1.0 400 Bad Request');
+echo 'Bad request';
+}
+Exit;
+}
 
 #####################################################
-        $oAuth2Client = $fb-> getOAuth2Client ();
-        //check if access token expired
-        if (!$accessToken-> isLongLived ()) {
-        // Exchanges a short-lived access token for a long-lived one
-        try {
-        /// try to get another access token
-        $accessToken = $oAuth2Client-> getLongLivedAccessToken ($accessToken);
-        }
-        catch (Facebook\Exceptions\FacebookSDKException $e) {
-        echo "<p>Error getting long-lived access token: " . $helper->getMessage () . "</p>\n\n";
-        Exit;
-        }
-        }
+$oAuth2Client = $fb-> getOAuth2Client ();
+//check if access token expired
+if (!$accessToken-> isLongLived ()) {
+// Exchanges a short-lived access token for a long-lived one
+try {
+/// try to get another access token
+$accessToken = $oAuth2Client-> getLongLivedAccessToken ($accessToken);
+}
+catch (Facebook\Exceptions\FacebookSDKException $e) {
+echo "<p>Error getting long-lived access token: " . $helper->getMessage () . "</p>\n\n";
+Exit;
+}
+}
 
 #####################################################
 //Sets the default fallback access token so we don't have to pass it to each request
-        $fb->setDefaultAccessToken($accessToken);
-        try {
-        $response = $fb->get('/me');
-        $userNode = $response->getGraphUser();
-        }
-        catch (Facebook\Exceptions\FacebookResponseException $e) {
-        // When Graph returns an error
-        echo 'Graph returned an error: ' . $e->getMessage();
-        Exit;
-        }
-        catch (Facebook\Exceptions\FacebookSDKException $e) {
-         //When validation fails or other local issues
-        echo 'Facebook SDK returned an error: ' . $e->getMessage();
-        Exit;
-        }
-        $fpsession = new Zend_Session_Namespace('facebook');
-        // write in session email & id & first_name
-        $fpsession->first_name= $userNode->getName();
+$fb->setDefaultAccessToken($accessToken);
+try {
+$response = $fb->get('/me');
+$userNode = $response->getGraphUser();
+}
+catch (Facebook\Exceptions\FacebookResponseException $e) {
+// When Graph returns an error
+echo 'Graph returned an error: ' . $e->getMessage();
+Exit;
+}
+catch (Facebook\Exceptions\FacebookSDKException $e) {
+ //When validation fails or other local issues
+echo 'Facebook SDK returned an error: ' . $e->getMessage();
+Exit;
+}
+$fpsession = new Zend_Session_Namespace('facebook');
+// write in session email & id & first_name
+$fpsession->first_name= $userNode->getName();
 
-        $this->redirect('/user/list');
+$this->redirect('/user/list');
 
 
     }
@@ -706,15 +661,16 @@ Zend_Session::namespaceUnset('admin_Auth');
     {
         
 
-        Zend_Auth::getInstance()->clearIdentity();
+Zend_Auth::getInstance()->clearIdentity();
         $this->redirect('/user/login');
+
 
     }
 
     public function fblogoutAction()
     {
 
-         Zend_Session::namespaceUnset('facebook');
+ Zend_Session::namespaceUnset('facebook');
         $this->redirect("/user/login");
 
     }

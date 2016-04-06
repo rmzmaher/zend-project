@@ -40,12 +40,17 @@
                                 
                                 <div class="support-link">
                                     <ul>
-                                        <li><a href="/user/postr/">EXPERIENCE</a></li>
-                                        <li><a href="#">HOTEL</a></li>
-                                        <li><a href="/user/map/">MAP</a></li>
-                                        <li><a href="#">BOOKED-HOTEL</a></li>
-                                        <li><a href="#">BOOKED-CARS</a></li>
-                                        <li><a href="/user/showlocations/">LOCATIONS</a></li>
+                                        <li><a href="/user/postr/id/<?= $value['id'] ?>">EXPERIENCE</a></li>
+                                        
+                                        <li><a href="/user/map/id/<?= $value['id'] ?>">MAP</a></li>
+                                        
+                                        <li><a href="/user/showlocations/id/<?= $value['id'] ?>">LOCATIONS</a></li>
+                                        <?php $user=$this->user; ?>
+            <?php if($user){ ?>
+                <li><a href="">My BooKing</a></li>
+                <li><a href="/user/make-Reservation/cid/<?= $value['id'] ?>">Book hotel</a></li>
+                <li><a href="/user/make-car-reserv/id/<?= $value['id'] ?>">Rent cars</a></li>
+            <?php } ?>
                         
                                     </ul>
                                 </div>
@@ -55,5 +60,29 @@
                 </div><!-- .row -->
             </div><!-- .container -->
         </section><!-- #footer -->
+
+    <!-- <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <div class="container">
+        <div class="navbar-footer">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/user/postr/id/<?= $value['id'] ?>">EXPERIENCES</a>
+          <a class="navbar-brand" href="/user/map/id/<?= $value['id'] ?>">MAP</a>
+          <a class="navbar-brand" href="/user/showlocations/id/<?= $value['id'] ?>">LOCATIONS</a>
+            <?php $user=$this->user; ?>
+            <?php if($user){ ?>
+                <a class="navbar-brand" href="">My BooKing</a>
+                <a class="navbar-brand" href="/user/make-Reservation/cid/<?= $value['id'] ?>">Book hotel</a>
+                <a class="navbar-brand" href="/user/make-car-reserv/id/<?= $value['id'] ?>">Rent cars</a>
+            <?php } ?>
+        </div>
+        
+      </div>
+    </nav>
+ -->
 	
 </div>

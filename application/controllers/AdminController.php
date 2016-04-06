@@ -6,21 +6,20 @@ class AdminController extends Zend_Controller_Action
 
     public function init()
     {
-        
 
 
+   Zend_Auth::getInstance()->clearIdentity();
+    
 
-$authorization = Zend_Auth::getInstance();
-$fbsession = new Zend_Session_Namespace('admin_Auth');
-if (!$authorization->hasIdentity() &&
-!isset($fbsession->first_name)) {
+$adminsession = new Zend_Session_Namespace('admin_Auth');
+//var_dump($adminsession->first_name);
+//if (!isset($fbsession->first_name)) {
+ if(!isset($adminsession->first_name)){
 if ($this->_request->getActionName() != 'login' ) {
-$this->redirect("User/login");
+$this->redirect("admin/login");
+
 }
 }
-
-
-
 
 
     }
@@ -42,10 +41,11 @@ $this->redirect("User/login");
                 $load = new Zend_File_Transfer_Adapter_Http();
                 $load->addFilter('Rename', '/var/www/html/zend_pro/public/images/location/' . $_POST['name'] . '.jpg');
                 $load->receive();
-                $_POST['city_id'] = 1;
+                $city_id = $this->_request->getParam("id");
+                $_POST['city_id'] = $city_id;
                 $_POST['image'] = '/images/location/' . $_POST['name'] . '.jpg';
                 $post_obj->add_location($_POST);
-                $this->redirect('/admin/show');
+                $this->redirect('/admin/allcountry');
             }
         }
         $this->view->myform = $form;
@@ -170,7 +170,7 @@ $this->redirect("User/login");
                 $load->addFilter('Rename','/var/www/html/zend_pro/public/images/city/'.$_POST['name'].'.jpg');
                 $load->receive();
                 $_POST['image']='/images/city/'.$_POST['name'].'.jpg';
-                $_POST['country_id']=$country_id;
+                $_POST['country_id']=$editcity[0]['country_id'];
                 $city_obj->edit_city($city_id,$_POST);
             
                 $this->redirect("/admin/allcountry");
@@ -191,7 +191,7 @@ $this->redirect("User/login");
                 $load = new Zend_File_Transfer_Adapter_Http();
                 //$image=$_FILES['image']['name'];
 
-                $load->addFilter('Rename','/var/www/html/zend_pro/public/images/city/'.$_POST['name'].'.jpg');
+                $load->addFilter('Rename','/var/www/html/zend_project/public/images/city/'.$_POST['name'].'.jpg');
 
                 $load->receive();
                 $_POST['image'] = '/images/city/' . $_POST['name'] . '.jpg';
@@ -203,33 +203,94 @@ $this->redirect("User/login");
 
     }
 
+    public function gethotelsAction()
+    {
+        $hotel_model=new Application_Model_Hotel();
+        $all_hotels=$hotel_model->listAllHotels();
+        $this->view->hotels=$all_hotels;
+
+    }
+
+    public function updatehotelAction()
+    {
+
+        $hotel_id= $this->_request->getParam("id");
+        $hotel_model=new Application_Model_Hotel();
+        $hotel=$hotel_model->getOneHotel($hotel_id);
+        $this->view->hotel = $hotel[0]; // send hotel data to the update view
+        $update_form = new Application_Form_Updatehotel();
+        $update_form->populate($hotel[0]);
+        $this->view->updateForm=$update_form;
+
+        $request=$this->getRequest();
+        if($request->isPost())
+        {
+            if($update_form->isValid($request->getPost()))
+            {
+                $hotel_model->updateHotel($_POST,$hotel_id);
+                $this->redirect('/admin/gethotels');
+            }
+        }
+    }
+
+    public function addhotelAction()
+    {
+        $country_id= $this->_request->getParam("id");
+        Application_Form_Newhotel::$country_id=$country_id;
+        $newhotel_form= new Application_Form_Newhotel();
+        //$newhotel_form->setCountryId($country_id);
+        $this->view->newhotel=$newhotel_form;
+        $hotel_model=new Application_Model_Hotel();
+        $request=$this->getRequest();
+
+        if($request->isPost())
+        {
+            if($newhotel_form->isValid($request->getPost()))
+            {
+                $hotel_model->addHotel($_POST);
+                $this->redirect('/visit/gethotels');
+                //for test
+                //$this->view->inserteddata=$_POST;
+            }
+        }
+    }
+
+    public function deletehotelAction()
+    {
+        $hotel_id= $this->_request->getParam("id");
+        $hotel_model=new Application_Model_Hotel();
+        $hotel_model->removeHotel($hotel_id);
+        $this->redirect('/admin/gethotels');
+    }
+
+
     public function loginAction()
     {
         
-$login_form = new Application_Form_Admin( );
-$this->view->form=$login_form;
+        $login_form = new Application_Form_Admin( );
+        $this->view->form=$login_form;
 
-if ($this->_request->isPost()) {
-if ($login_form->isValid($this->_request->getPost( ))) {
+        if ($this->_request->isPost())
+        {
+            if ($login_form->isValid($this->_request->getPost( ))) {
 
-$email = $this->_request->getParam('email');
-$password = $this->_request->getParam('passwd');
+            $email = $this->_request->getParam('email');
+            $password = $this->_request->getParam('passwd');
 //echo $email;
 //echo $password;
 // get the default db adapter
-$db = Zend_Db_Table::getDefaultAdapter( );
+            $db = Zend_Db_Table::getDefaultAdapter( );
 //create the auth adapter
-$authAdapter = new Zend_Auth_Adapter_DbTable($db, 'admin', "email",
-'passwd');
-$authAdapter->setIdentity($email);
-$authAdapter->setCredential($password);
+            $authAdapter = new Zend_Auth_Adapter_DbTable($db, 'admin', "email", 'passwd');
+            $authAdapter->setIdentity($email);
+            $authAdapter->setCredential($password);
 //authenticate
-$result = $authAdapter->authenticate( );
+            $result = $authAdapter->authenticate( );
 
 //var_dump($result);
-if ($result->isValid( )) {
+            if ($result->isValid( )) {
 
-$adminsession = new Zend_Session_Namespace('admin_Auth');
+            $adminsession = new Zend_Session_Namespace('admin_Auth');
 /*
 $auth = admin_Auth::getInstance( );
 //if the user is valid register his info in session
@@ -241,39 +302,26 @@ $storage->write($authAdapter->getResultRowObject(array('email', 'id',
 
 */
 
-$adminsession->first_name =$authAdapter->getResultRowObject(array('email', 'id',
-'name')); 
+            $adminsession->first_name =$authAdapter->getResultRowObject(array('email', 'id','name'));
 
 // redirect to root index/index
-return $this->redirect( '/admin/list');
-
-
-}
-
-else
-{
-$message="invalid email or password ";
-$this->view->mes=$message;
-
-
-}
+            return $this->redirect( '/admin/list');
 
 
 
+            }
+
+            else
+            {
+                $message="invalid email or password ";
+                $this->view->mes=$message;
+
+
+            }
 
 }
-
-
-
-
-
-
 
     }
-
-
-
-
 
     }
 
@@ -282,8 +330,6 @@ $this->view->mes=$message;
        
         $user_model = new Application_Model_User();
         $this->view->user=$user_model->listUsers();
-
-
 
     }
 
@@ -295,11 +341,6 @@ Zend_Session::namespaceUnset('admin_Auth');
 $this->redirect("/user/login");
 
 
-
-
-
-
-
     }
 
     public function blockAction()
@@ -309,15 +350,20 @@ $this->redirect("/user/login");
 	$us_id = $this->_request->getParam("uid");
 	$user = $user_model->blockUser($us_id);
 	$this->redirect("/admin/list");
-                  
-
-
 
 
     }
 
 
 }
+
+
+
+
+
+
+
+
 
 
 

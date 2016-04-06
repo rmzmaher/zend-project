@@ -1,0 +1,24 @@
+
+<h1 align="center">
+	Hotel Reservation
+</h1>
+<form class="form-group">
+<?php
+echo $this->hotelreservform->getElement('name');
+echo'<br/>';
+echo $this->hotelreservform->getElement('from');
+echo'<br/>';
+echo $this->hotelreservform->getElement('to');
+echo'<br/>';
+echo $this->hotelreservform->getElement('member');
+echo'<br/>';
+echo $this->hotelreservform->getElement('submit');
+echo'<br/>';
+?>
+</form>
+<script>
+
+	$('#from_field').datepicker('hide');
+	$('#to_field').datepicker('hide');
+
+</script>
