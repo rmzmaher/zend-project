@@ -1,9 +1,18 @@
+<?php
+$city = $this->city;
+//var_dump($city);
+$longitude = $city[0]['Longitude'];
+//var_dump($longitude);
+$latitude = $city[0]['Latitude'];
+//var_dump( $longitude);
+?>
 <html>
 <head>
 	<style>
 		#map {
-			width: 500px;
-			height: 400px;
+			margin: auto;
+			width: 80%;
+			height: 600px;
 			align-content: center;
 		}
 	</style>
@@ -14,7 +23,7 @@
 	function initMap() {
 		var mapDiv = document.getElementById('map');
 		var map = new google.maps.Map(mapDiv, {
-			center: {lat: <?php 44.540?>, lng: <?php -78.546 ?>},
+			center: {lat:<?= $latitude ?> , lng:  <?= $longitude ?> },
 			zoom: 8
 		});
 	}

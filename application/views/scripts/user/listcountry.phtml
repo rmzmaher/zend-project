@@ -1,0 +1,65 @@
+<br /><br />
+<div id="view-content">
+<!-- 	<div class="row">
+<div class="col-xs-2"></div>
+	<div class="col-xs-9">
+		<?php
+// 			foreach ($this->country as $key => $value)
+// 			{ 
+// 				echo $value['id'] ;
+// echo "<br>";
+// echo  $value['name'];
+// echo "<br>";
+// echo "<img src='{$value['image']}' width='900' height='300'class='img-rounded'>";
+// echo "<br>";
+// echo $value['rating'] ;
+// echo "<br>";
+// echo $value['description'] ;
+
+// 			}
+		?>
+		</div>
+		</div> -->
+		<div class="jumbotron">
+      <div class="container">
+      <?php
+			foreach ($this->country as $key => $value)
+			{ 
+        echo "<h1>{$value['name']}</h1>
+        <p><img src='{$value['image']}' width='1200' height='300'class='img-rounded'></p>
+        <p>{$value['description']}</p>";
+        }?>
+      </div>
+    </div>
+    <div class="container">
+	<!-- <div class="row">
+<div class="col-xs-2"></div>
+ 
+  	<div class="col-xs-8">
+		<table class="table">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Name</th>
+			</tr>
+		</thead> -->
+		<div class='row'>
+		<?php
+			foreach ($this->cities as $key => $value)
+			{
+				echo "
+        <div class='col-xs-4'>
+          <h2>{$value['name']}</h2>";
+				$id =$value['id'];
+				// echo "<tr> <td> <a href='/user/citydata/id/{$id}'> $id</a> </td> <td><img src='{$value['image']}' width='90' class='img-rounded'> {$value['name']}</td> <td>{$value['rating']}</td><td> {$value['description']}</td></tr>";
+
+				echo "<p><img src='{$value['image']}' width='90' height='90' class='img-rounded'></p>
+				<p>{$value['description']}</p>
+          <p><a class='btn btn-default' href='/user/citydata/id/{$id}' role='button'>View details &raquo;</a></p>";
+				echo "</div>";
+			}
+		?>
+		<!-- </table> -->
+		</div>
+	</div>
+</div>

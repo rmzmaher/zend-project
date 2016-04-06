@@ -1,0 +1,26 @@
+<br /><br />
+<div id="view-content">
+	<table class="table">
+	<thead>
+		<tr>
+			<th>ID</th>
+			<th>Name</th>
+			<th>rate</th>
+			<th>description</th>
+		</tr>
+	</thead>
+	<?php
+		foreach ($this->cities as $key => $value)
+		{
+			$id =$value['id'];
+			echo "<tr> <td> <a href='/user/citydata/id/{$id}'> $id</a> </td> <td> {$value['name']}</td> <td>{$value['rating']}</td><td> {$value['description']}</td></tr>";
+// 			echo "<tr>".
+// "<td><a href='/user/citydata/id/".$value['id'].">". $value['id']."</a></td>" .
+// "<td>" . $value['name'] . "</td>" .
+// "<td>" . $value['rating'] . "</td>" .
+// "<td>" . $value['description'] . "</td>" .
+// "</tr>";
+		}
+	?>
+	</table>
+</div>

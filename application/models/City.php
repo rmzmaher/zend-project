@@ -10,7 +10,10 @@ class Application_Model_City extends Zend_Db_Table_Abstract
         'onDelete'=>'cascade'
 
     ));
-
+	function listcity()
+	{
+		return $this->fetchAll()->toArray();
+	}
 	function all_city($country_id)
 	{
 		return $this->find($country_id)->toArray();
@@ -28,6 +31,8 @@ class Application_Model_City extends Zend_Db_Table_Abstract
 		$row = $this->createRow();
 		$row->name=$countrydata['name'];
 		$row->image=$countrydata['image'];
+		$row->atitude  = $countrydata['atitude'];
+		$row->latitude = $countrydata['latitude'];
 		$row->rating=$countrydata['rating'];
 		$row->description=$countrydata['description'];
 		$row->country_id=$countrydata['country_id'];
@@ -38,6 +43,8 @@ class Application_Model_City extends Zend_Db_Table_Abstract
 	{
 		$custom_country['name'] = $countrydata['name'];
 		$custom_country['image']  = $countrydata['image'];
+		$custom_country['atitude']  = $countrydata['atitude'];
+		$custom_country['latitude']  = $countrydata['latitude'];
 		$custom_country['rating']  = $countrydata['rating'];
 		$custom_country['description']  = $countrydata['description'];
 		$this->update($custom_country,"id = $id");
