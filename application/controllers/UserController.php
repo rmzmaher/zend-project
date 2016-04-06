@@ -25,16 +25,24 @@ class UserController extends Zend_Controller_Action
     {
         // action body
 
-        //////////////
+        ////////session//////
         $auth = Zend_Auth::getInstance();
         $storage = $auth->getStorage();
         $user=$storage->read();
         $usr=$user->id;
-        /////////////
+        $name=$user->username;
+        ////////posts/////
         $post_obj = new Application_Model_Post();
         $posts = $post_obj->getposts_by_city_id(1);
+        /////comments///
         $comment_obj=new Application_Model_Comment();
         $comments=$comment_obj->get_comments();
+        /// all users ///
+        $users= new Application_Model_User();
+        $pos_usr=$users->listUsers();
+
+        $this->view->name=$name;
+        $this->view->pos_usr=$pos_usr;
         $this->view->pos = $posts;
         $this->view->com=$comments;
         $this->view->user=$usr;
@@ -143,7 +151,7 @@ class UserController extends Zend_Controller_Action
         $id=$this->_request->getParam('id');
         //echo $id;die();
         $comment_obj->delete_comment($id);
-        $this->redirect('/user/postr');
+        $this->redirect('/user/postr/');
     }
 
     public function commentcreateAction()
