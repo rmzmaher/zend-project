@@ -36,7 +36,10 @@ Zend_Session::namespaceUnset('admin_Auth');
         $name=$user->username;
         ////////posts/////
         $post_obj = new Application_Model_Post();
-        $posts = $post_obj->getposts_by_city_id(1);
+        // geting city_id
+        $city_id= $this->_request->getParam('id');
+
+        $posts = $post_obj->getposts_by_city_id($city_id);
         /////comments///
         $comment_obj=new Application_Model_Comment();
         $comments=$comment_obj->get_comments();
@@ -44,6 +47,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $users= new Application_Model_User();
         $pos_usr=$users->listUsers();
 
+        $this->view->city_id=$city_id;
         $this->view->name=$name;
         $this->view->pos_usr=$pos_usr;
         $this->view->pos = $posts;
@@ -80,10 +84,13 @@ Zend_Session::namespaceUnset('admin_Auth');
                 $user=$storage->read();
                 $_POST['user_id']=$user->id;
                 /////////////
-                $_POST['city_id']=1;
+                // geting city_id
+                $city_id= $this->_request->getParam('id');
+
+                $_POST['city_id']=$city_id;
                 $_POST['image']='/images/post/'.$_POST['title'].'.jpg';
                 $post_obj->create_post($_POST);
-                $this->redirect('/user/postr');
+                $this->redirect('/user/postr/id/'.$city_id.'');
             }
         }
         $this->view->myform = $form;
@@ -110,10 +117,12 @@ Zend_Session::namespaceUnset('admin_Auth');
                 $user=$storage->read();
                 $_POST['user_id']=$user->id;
                 /////////////;
-                $_POST['city_id']=1;
+                // geting city_id
+                $city_id= $this->_request->getParam('cityid');
+                $_POST['city_id']=$city_id;
                // var_dump( $_POST);die();
                 $post_obj->update_post($_POST);
-                $this->redirect('/user/postr');
+                $this->redirect('/user/postr/id/'.$city_id.'');
             }
         }
           /*
@@ -138,9 +147,10 @@ Zend_Session::namespaceUnset('admin_Auth');
         $id = $this->_request->getParam('id');
         //echo "$id";
         $post_obj->delete_post($id);
+        // geting city_id
+        $city_id= $this->_request->getParam('cityid');
 
-
-        $this->redirect('/user/postr');
+        $this->redirect('/user/postr/id/'.$city_id.'');
 
         //test case
      //   $post_obj = new Application_Model_Post();
@@ -190,18 +200,23 @@ Zend_Session::namespaceUnset('admin_Auth');
     public function mapAction()
     {
         // action body
+        // geting city_id
+        $city_id= $this->_request->getParam('id');
+        /////
         $city_obj = new Application_Model_City();
      //from main city page  //$id=$this->_request->getParam('id');
-        $city=$city_obj->one_city(1);
+        $city=$city_obj->one_city($city_id);
         $this->view->city = $city;
-
     }
 
     public function showlocationsAction()
     {
         // action body
         $location_obj=new Application_Model_Location();
-        $locations = $location_obj->getlocations_by_city_id(1);
+        // geting city_id
+        $city_id= $this->_request->getParam('id');
+
+        $locations = $location_obj->getlocations_by_city_id($city_id);
         $paginator = Zend_Paginator::factory($locations);
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('/user/pagination.phtml');
        // var_dump($paginator);die();
@@ -264,7 +279,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
     }
 
-    /// details
+    /// details of user
     public function detailsAction()
     {
         $user_model = new Application_Model_User();
@@ -286,15 +301,16 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->redirect("/user/list");
     }
 
-
+///country main page
     public function listcountryAction()
     {
         $country_obj= new Application_Model_Country();
-        $city_obj= new Application_Model_City();
         $country_id=$this->_request->getParam("id");
         $one_country=$country_obj->one_country($country_id);
+
          $this->view->country = $one_country;
-         $posts_of_user_id =$country_obj->find_all_country_city($country_id);
+
+        $posts_of_user_id =$country_obj->find_all_country_city($country_id);
         $this->view->cities = $posts_of_user_id;
         
         // $all_city= $city_obj->all_city($country_id);
@@ -311,13 +327,25 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->view->cities = $posts_of_user_id;
     }
 
+//city main page
+
     public function citydataAction()
     {
-         $city_obj= new Application_Model_City();
+        // user
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $user=$storage->read();
+        $user_id=$user->id;
+        $this->view->user=$user_id;
+        //
+        $city_obj= new Application_Model_City();
         $city_id= $this->_request->getParam("id");
         $one_city= $city_obj->one_city($city_id);
         $this->view->city = $one_city;
+
+
     }
+
 
     public function homeAction()
     {
@@ -330,17 +358,24 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->view->cities = $all_city;
     }
 
+
     public function makeReservationAction()
     {
+        /// user
         $auth = Zend_Auth::getInstance();
         $storage = $auth->getStorage();
         $user=$storage->read();
         $user_id=$user->id;
-
+        $id=$this->_request->getParam('cid');
+        ///reservation form
         $HreservForm=new Application_Form_HotelReservation();
+        $HreservForm->setId($id);
+        $HreservForm->setHotels();
+        ////
         $this->view->hotelreservform=$HreservForm;
         //$user_id= $this->_request->getParam("id");
 
+        /////////////////////
         $request=$this->getRequest();
         $hotelReservation_model = new Application_Model_HotelReservation();
         if($request->isPost()){
@@ -358,6 +393,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         }
     }
 
+//// hotel reserve
     public function getReservationsAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -370,7 +406,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $reservs=$model->getUserReservation($user_id);
         $this->view->reservers=$reservs;
     }
-
+/// make reservation
     public function makeCarReservAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -395,7 +431,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-
+// get car reservation
     public function getCarReservationAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -408,7 +444,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $rents=$carReservModel->getUserReservation($user_id);
         $this->view->rents=$rents;
     }
-
+/// update rent
     public function updateRentAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -434,7 +470,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-
+//delete rent
     public function deleterentAction()
     {
 
@@ -451,7 +487,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $model->cancelReservation($rent_id);
         $this->redirect('/visit/get-car-reservation');
     }
-
+/// update reservation
     public function updateReservationAction()
     {
         $reservation_id= $this->_request->getParam("id");
@@ -489,7 +525,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-
+//delete reservation
     public function deletereservationAction()
     {
         $reservation_id= $this->_request->getParam("id");
@@ -516,7 +552,7 @@ Zend_Session::namespaceUnset('admin_Auth');
     //     $this->redirect("/user/list");
     // }
 
-
+/// login function
     public function loginAction()
     {
         
@@ -552,7 +588,7 @@ Zend_Session::namespaceUnset('admin_Auth');
                 $storage->write($authAdapter->getResultRowObject(array('email', 'id',
                 'username')));
                 // redirect to root index/index
-                return $this->redirect( '/user/list');
+                return $this->redirect( '/user/home');
             }
             else
             {

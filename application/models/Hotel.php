@@ -48,5 +48,9 @@ class Application_Model_Hotel extends Zend_Db_Table_Abstract
         return $this->find($id)->toArray();
     }
 
+    function get_hotels_by_city_id($city_id){
+        return $this->fetchAll("city_id=$city_id");
+    }
+
 }
 

@@ -91,22 +91,6 @@ $this->addElements(array($id,$fname,$email,$gender,$pswd,$confirmPswd,$submit,$a
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
 

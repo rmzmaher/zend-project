@@ -18,11 +18,12 @@
 <?php
 $com_usr=$this->com_usr	;
 ?>
+<?php $city_id=$this->city_id ?>
 <?php $user=$this->user ?>
 <?php $name=$this->name?>
 <div align="center">
 	<h1 >Experience</h1>
-	<a class='btn btn-info btn-sm '  href='/user/postcreate '> <span class="glyphicon glyphicon-plus"></span> Share Your Experience </a>
+	<a class='btn btn-info btn-sm '  href='/user/postcreate/id/<?= $city_id ?> '> <span class="glyphicon glyphicon-plus"></span> Share Your Experience </a>
 </div>
 	<?php foreach ($this->pos as $post) { ?>
 			<div class='container-fluid '>
@@ -43,8 +44,8 @@ $com_usr=$this->com_usr	;
 					<input type="hidden" id="name" value='<?= $name ?>' >
 					<input type='hidden' id='pid' value='<?= $post_id?>'>
 						<?php if($post['user_id']== $user ){ ?>
-							<a class='btn btn-danger' href='postdelete/id/<?= $post['id'] ?> '>delete</a>
-							<a class='btn btn-warning' href='postupdate/id/<?= $post['id'] ?> '>Update</a>
+							<a class='btn btn-danger' href='/user/postdelete/id/<?= $post['id'] ?>/cityid/<?=$city_id ?> '>delete</a>
+							<a class='btn btn-warning' href='/user/postupdate/id/<?= $post['id']?>/cityid/<?=$city_id ?>  '>Update</a>
 							<?php } ?>
 						<?php if($user) { ?>
 							<br/>

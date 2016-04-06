@@ -7,6 +7,7 @@ class AdminController extends Zend_Controller_Action
     public function init()
     {
 
+
    Zend_Auth::getInstance()->clearIdentity();
     
 
@@ -40,10 +41,11 @@ $this->redirect("admin/login");
                 $load = new Zend_File_Transfer_Adapter_Http();
                 $load->addFilter('Rename', '/var/www/html/zend_pro/public/images/location/' . $_POST['name'] . '.jpg');
                 $load->receive();
-                $_POST['city_id'] = 1;
+                $city_id = $this->_request->getParam("id");
+                $_POST['city_id'] = $city_id;
                 $_POST['image'] = '/images/location/' . $_POST['name'] . '.jpg';
                 $post_obj->add_location($_POST);
-                $this->redirect('/admin/show');
+                $this->redirect('/admin/allcountry');
             }
         }
         $this->view->myform = $form;
@@ -168,7 +170,7 @@ $this->redirect("admin/login");
                 $load->addFilter('Rename','/var/www/html/zend_pro/public/images/city/'.$_POST['name'].'.jpg');
                 $load->receive();
                 $_POST['image']='/images/city/'.$_POST['name'].'.jpg';
-                $_POST['country_id']=$country_id;
+                $_POST['country_id']=$editcity[0]['country_id'];
                 $city_obj->edit_city($city_id,$_POST);
             
                 $this->redirect("/admin/allcountry");
@@ -317,22 +319,9 @@ $storage->write($authAdapter->getResultRowObject(array('email', 'id',
 
             }
 
-
-
-
 }
 
-
-
-
-
-
-
     }
-
-
-
-
 
     }
 
@@ -341,8 +330,6 @@ $storage->write($authAdapter->getResultRowObject(array('email', 'id',
        
         $user_model = new Application_Model_User();
         $this->view->user=$user_model->listUsers();
-
-
 
     }
 
@@ -354,11 +341,6 @@ Zend_Session::namespaceUnset('admin_Auth');
 $this->redirect("/user/login");
 
 
-
-
-
-
-
     }
 
     public function blockAction()
@@ -368,9 +350,6 @@ $this->redirect("/user/login");
 	$us_id = $this->_request->getParam("uid");
 	$user = $user_model->blockUser($us_id);
 	$this->redirect("/admin/list");
-                  
-
-
 
 
     }
