@@ -13,7 +13,10 @@ class UserController extends Zend_Controller_Action
                         $this->redirect("User/login");
                         }
             }
-
+            $country_obj= new Application_Model_Country();
+        
+        $all_country= $country_obj->all_country();
+        $this->view->countries = $all_country;
     }
 
     public function indexAction()
@@ -314,9 +317,12 @@ class UserController extends Zend_Controller_Action
         $city_obj= new Application_Model_City();
         $all_country= $country_obj->all_country();
         $this->view->countries = $all_country;
+        //return $all_country;
 
         $all_city= $city_obj->listcity();
         $this->view->cities = $all_city;
+        $country = new Zend_Session_Namespace('country');
+        $country = $all_country;
     }
 
 

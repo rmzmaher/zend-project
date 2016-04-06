@@ -1,15 +1,19 @@
 <?php $user=$this->user ?>
+<div class='row'>
 <?php foreach ($this->pos as $post) { ?>
 			<div class='container-fluid'>
+			
+			<div class='col-xs-8'>
 				<div class='container post'>
 					<!-- experience -->
-						<h1 align='center'> <?= $post['title'] ?> </h1>
-						<h3 align='center'> <?= $post['content'] ?></h3>
+
+						<h1> <?= $post['title'] ?> </h1>
+						<h3> <?= $post['content'] ?></h3>
 						<?php $post_id= $post['id']; ?>
 						<input type='hidden' id='pid' value='<?= $post_id?>'>
 						<?php if($post['user_id']== $user ){ ?>
-							<a class='btn btn-danger' href='postdelete/id/<?= $post['id'] ?> '>delete</a>
-							<a class='btn btn-warning' href='postupdate/id/<?= $post['id'] ?> '>Update</a>
+							<a class='btn btn-danger' href='/user/postdelete/id/<?= $post['id'] ?> '>delete</a>
+							<a class='btn btn-warning' href='/user/postupdate/id/<?= $post['id'] ?> '>Update</a>
 							<?php } ?>
 
 						<!--//// when only login -->
@@ -26,10 +30,12 @@
 								<?php $comment_id= $comment['id']; ?>
 								<input type='hidden' id='cid' value='<?= $comment_id ?> '>
 
-							<a class='btn btn-danger' href='commentdelete/id/<?= $comment['id']?> '>delete</a>
+							<a class='btn btn-danger' href='/user/commentdelete/id/<?= $comment['id']?> '>delete</a>
 							<?php } ?>
 						<?php } ?>
 				</div>
+			</div>
+			</div>
 			</div>
 <?php } ?>
 

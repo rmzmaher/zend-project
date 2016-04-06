@@ -8,9 +8,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Home | Visit.com</title>
-    <script src="/jquery-1.12.1.min.js"></script>
-    <script src="/bootstrap/js/bootstrap.min.js"></script>
+   <!-- -->
     <!-- core CSS -->
+    <script src="/js/jquery-1.12.1.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="bootstrap/js/bootstrap.min.js"></script>
     <link href="/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap-theme.min.css.map" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -19,10 +21,33 @@
     <link href="/bootstrap/css/bootstrap.css.map" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
     <link href="/bootstrap/css/bootstrap-theme.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/slicknav.css">
+        <link rel="stylesheet" href="/css/owl.theme.css">
+        <link rel="stylesheet" href="/css/owl.carousel.css">
+        <link rel="stylesheet" href="/css/owl.transitions.css">
+        <link rel="stylesheet" href="/css/font-awesome.min.css">
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/main.css">
+        <link rel="stylesheet" href="/css/responsive.css">
+        <script src="/js/vendor/modernizr-2.6.2.min.js"></script>
+    </head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.2.min.js"><\/script>')</script>
+        <script src="/js/owl.carousel.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/plugins.js"></script>
+        <script src="/js/main.js"></script>
+         <script>
+            (function(b,o,i,l,e,r){b.GoogleAnalyticsObject=l;b[l]||(b[l]=
+            function(){(b[l].q=b[l].q||[]).push(arguments)});b[l].l=+new Date;
+            e=o.createElement(i);r=o.getElementsByTagName(i)[0];
+            e.src='//www.google-analytics.com/analytics.js';
+            r.parentNode.insertBefore(e,r)}(window,document,'script','ga'));
+            ga('create','UA-XXXXX-X');ga('send','pageview');
+        </script>
 
-</head> <!--/head-->
 <body>
-<nav class="navbar navbar-default ">
+<nav class="navbar  bg-info ">
     <div class="container-fluid" >
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
@@ -33,8 +58,24 @@
             </button>
             <a class="navbar-brand" href="/user/home"><span class="glyphicon glyphicon-home"></span>  Visit ME </a>
         </div>
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+         
+
+            <ul class="nav navbar-nav">
+
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle2" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">COUNTRIES<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <?php
+            foreach ($this->countries as $key => $value)
+            { 
+                echo "<li><a href='/user/listcountry/id/{$value['id']}'>{$value['name']}</a></li><li role='separator'class='divider'></li>";
+             }?>
+          </ul>
+        </li>
+      </ul>
+             
 <?php
     $auth = Zend_Auth::getInstance();
     $storage = $auth->getStorage();
@@ -45,9 +86,9 @@ if (!empty($sessionRead)) {
         $name = $sessionRead->username; ?>
 
      <ul class="nav navbar-nav navbar-right"><!-- right side data -->
-         <li><a class="navbar-brand"> Welcome <?=$name?></a></li>
+         <li><a class="navbar-brand"> Welcome <i class="glyphicon glyphicon-user"></i><?=$name?></a> </li>
         <li class="dropdown">
-            <a class="btn btn-default navbar-btn" href="<?php echo $this->baseUrl() ?>/User/logout"> Logout </a>
+            <a class="btn btn-primary navbar-btn" href="<?php echo $this->baseUrl() ?>/User/logout"> Logout </a>
         </li>
       </ul>
 <?php
@@ -57,7 +98,7 @@ if (!empty($sessionRead)) {
         <ul class="nav navbar-nav navbar-right"><!-- right side data -->
             <li><a class="navbar-brand"> Welcome <?=$name?></a></li>
             <li class="dropdown">
-                <a class="btn btn-default navbar-btn" href="<?php echo $this->baseUrl() ?>/User/fblogout"> Logout </a>
+                <a class="btn btn-primary navbar-btn" href="<?php echo $this->baseUrl() ?>/User/fblogout"> Logout </a>
             </li>
         </ul>
 <?php
@@ -79,3 +120,18 @@ elseif (isset($adminsession->first_name) && !empty (isset($adminsession->first_n
 </body>
 
 <?php echo $this->layout()->content; ?>
+
+<section id="footercopy">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <div class="copyright">
+      <p> &copy; Copyright 2015. Designed by <a href="/user/home">KGAR</a></p>
+    </div>
+                        </div>
+                    </div><!-- col-md-12 -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </section><!-- #footer -->
+
