@@ -184,7 +184,7 @@ class AdminController extends Zend_Controller_Action
                 $load = new Zend_File_Transfer_Adapter_Http();
                 //$image=$_FILES['image']['name'];
 
-                $load->addFilter('Rename','/var/www/html/zend_pro/public/images/city/'.$_POST['name'].'.jpg');
+                $load->addFilter('Rename','/var/www/html/zend_project/public/images/city/'.$_POST['name'].'.jpg');
 
                 $load->receive();
                 $_POST['image'] = '/images/city/' . $_POST['name'] . '.jpg';
@@ -228,7 +228,8 @@ class AdminController extends Zend_Controller_Action
 
     public function addhotelAction()
     {
-        $newhotel_form= new Application_Form_Newhotel();
+        $country_id= $this->_request->getParam("id");
+        $newhotel_form= new Application_Form_Newhotel($country_id);
         $this->view->newhotel=$newhotel_form;
         $hotel_model=new Application_Model_Hotel();
         $request=$this->getRequest();
