@@ -2,6 +2,7 @@
 
 class Application_Form_HotelReservation extends Zend_Form
 {
+    public $_id = 0;
 
     public function init()
     {
@@ -11,17 +12,7 @@ class Application_Form_HotelReservation extends Zend_Form
         $this->setAttrib('class','form_horizontal container');
         $this->setAttrib('id','newHReserv');
 
-        $id =new Zend_Form_Element_Hidden('id');
-
-        $name = new Zend_Form_Element_Select('name');
-        $name->setAttrib('class' ,'form-control');
-        $hotel_model=new Application_Model_Hotel();
-        $hotels=$hotel_model->listAllHotels();
-        foreach ($hotels as $key=>$value)
-        {
-            $name->addMultiOption($value['id'],$value['name']);
-        }
-        $name->setLabel("Hotel Name:");
+       // $id =new Zend_Form_Element_Hidden('id');
 
         $from= new Zend_Form_Element_Text('from');
         $from->setLabel('From :');
@@ -53,14 +44,32 @@ class Application_Form_HotelReservation extends Zend_Form
         $submit->setAttrib('class','btn btn-success');
 
         $this->addElements(array(
-            $name,
             $from,
             $to,
             $member,
             $submit
         ));
+
     }
 
+    public function setId($id){
+        $this->_id = $id;
+        }
 
+    public function setHotels(){
+        $name = new Zend_Form_Element_Select('name');
+        $name->setAttrib('class' ,'form-control');
+        $hotel_model=new Application_Model_Hotel();
+        $city_id=$this->_id;
+        $hotels=$hotel_model->get_hotels_by_city_id($city_id);
+
+        foreach ($hotels as $key=>$value)
+        {
+            $name->addMultiOption($value['id'],$value['name']);
+        }
+        $name->setLabel("Hotel Name:");
+
+        $this->addElement($name);
+    }
 }
 
