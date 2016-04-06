@@ -68,7 +68,7 @@ class UserController extends Zend_Controller_Action
         if ($request->isPost()) {
             if ($form->isValid($request->getPost())) {
                 $load=new Zend_File_Transfer_Adapter_Http();
-                $load->addFilter('Rename','/var/www/html/zend_pro/public/images/post'.$_POST['title'].'.jpg');
+                $load->addFilter('Rename','/var/www/html/zend_pro/public/images/post/'.$_POST['title'].'.jpg');
                 $load->receive();
                 //this is to link with city page and userid[session]
                 //////////////
@@ -283,13 +283,236 @@ class UserController extends Zend_Controller_Action
         $this->redirect("/user/list");
     }
 
-    public function blockAction()
+
+    public function listcountryAction()
     {
-        $user_model = new Application_Model_User();
-        $us_id = $this->_request->getParam("uid");
-        $user = $user_model->blockUser($us_id);
-        $this->redirect("/user/list");
+        $country_obj= new Application_Model_Country();
+        $city_obj= new Application_Model_City();
+        $country_id=$this->_request->getParam("id");
+        $one_country=$country_obj->one_country($country_id);
+         $this->view->country = $one_country;
+         $posts_of_user_id =$country_obj->find_all_country_city($country_id);
+        $this->view->cities = $posts_of_user_id;
+        
+        // $all_city= $city_obj->all_city($country_id);
+        // $this->view->country = $one_country;
+        // $this->view->cities = $all_city;
     }
+
+    public function listcityAction()
+    {
+        $city_obj= new Application_Model_City();
+        $country_obj= new Application_Model_Country();
+        $country_id= $this->_request->getParam("id");
+        $posts_of_user_id =$country_obj->find_all_country_city($country_id);
+        $this->view->cities = $posts_of_user_id;
+    }
+
+    public function citydataAction()
+    {
+         $city_obj= new Application_Model_City();
+        $city_id= $this->_request->getParam("id");
+        $one_city= $city_obj->one_city($city_id);
+        $this->view->city = $one_city;
+    }
+
+    public function homeAction()
+    {
+        $country_obj= new Application_Model_Country();
+        $city_obj= new Application_Model_City();
+        $all_country= $country_obj->all_country();
+        $this->view->countries = $all_country;
+
+        $all_city= $city_obj->listcity();
+        $this->view->cities = $all_city;
+    }
+
+    public function makeReservationAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $user=$storage->read();
+        $user_id=$user->id;
+
+        $HreservForm=new Application_Form_HotelReservation();
+        $this->view->hotelreservform=$HreservForm;
+        //$user_id= $this->_request->getParam("id");
+
+        $request=$this->getRequest();
+        $hotelReservation_model = new Application_Model_HotelReservation();
+        if($request->isPost()){
+            if($HreservForm->isValid($request->getPost())){
+                $data['name']=$_POST['name'];
+                $data['from']=$_POST['from'];
+                $data['to']=$_POST['to'];
+                $data['member']=$_POST['member'];
+                $data['user_id']=$user_id;
+                $hotelReservation_model->addReservation($data);
+              //  $redirect="/user/get-reservations/id/".$user_id;
+                $this->redirect("/user/get-reservations");
+
+            }
+        }
+    }
+
+    public function getReservationsAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $user=$storage->read();
+        $user_id=$user->id;
+        //$user_id= $this->_request->getParam("id");
+        $model=new Application_Model_HotelReservation();
+
+        $reservs=$model->getUserReservation($user_id);
+        $this->view->reservers=$reservs;
+    }
+
+    public function makeCarReservAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $user=$storage->read();
+        $user_id=$user->id;
+
+        $CreservForm= new Application_Form_CarReservation();
+        $this->view->carform=$CreservForm;
+
+        $request=$this->getRequest();
+        $carReservModel= new Application_Model_CarReservation();
+        //$user_id= $this->_request->getParam("id");
+        if($request->isPost()){
+            if($CreservForm->isValid($request->getPost())) {
+                $data['from'] = $_POST['from'];
+                $data['to'] = $_POST['to'];
+                $data['location'] = $_POST['location'];
+                $data['user_id'] = $user_id;
+                $carReservModel->reserveCar($data);
+                $this->redirect("/user/get-car-reservation");
+            }
+        }
+    }
+
+    public function getCarReservationAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $user=$storage->read();
+        $user_id=$user->id;
+
+        //$user_id= $this->_request->getParam("id");
+        $carReservModel= new Application_Model_CarReservation();
+        $rents=$carReservModel->getUserReservation($user_id);
+        $this->view->rents=$rents;
+    }
+
+    public function updateRentAction()
+    {
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $user=$storage->read();
+        $user_id=$user->id;
+
+        $rent_id= $this->_request->getParam("id");
+        $form=new Application_Form_UpdateRent();
+        $model= new Application_Model_CarReservation();
+        $rent=$model->getOneRent($rent_id);
+        //$user_id=$rent[0]['user_id'];
+        $form->populate($rent[0]);
+        $this->view->Form=$form;
+
+        $request=$this->getRequest();
+        if($request->isPost())
+        {
+            if($form->isValid($request->getPost()))
+            {
+                $model->updateRent($_POST,$rent_id);
+                $this->redirect('/user/get-car-reservation');
+            }
+        }
+    }
+
+    public function deleterentAction()
+    {
+
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $sessionRead = $storage->read();
+        if (!empty($sessionRead)) {
+            $user_name = $sessionRead->user_name;
+            $user_id=$sessionRead->user_id;
+        }
+
+        $rent_id= $this->_request->getParam("id");
+        $model = new Application_Model_CarReservation();
+        $model->cancelReservation($rent_id);
+        $this->redirect('/visit/get-car-reservation');
+    }
+
+    public function updateReservationAction()
+    {
+        $reservation_id= $this->_request->getParam("id");
+        $form= new Application_Form_UpdateRservation();
+
+        $model= new Application_Model_HotelReservation();
+        $reservation = $model->getOneReservation($reservation_id);
+        $form->populate($reservation);
+        $this->view->form=$form;
+
+
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $sessionRead = $storage->read();
+        if (!empty($sessionRead))
+        {
+            $user_name = $sessionRead->user_name;
+            $user_id=$sessionRead->user_id;
+        }
+
+
+        $request=$this->getRequest();
+        if($request->isPost())
+        {
+            if($form->isValid($request->getPost()))
+            {
+                $data['name']=$_POST['name'];
+                $data['from']=$_POST['from'];
+                $data['to']=$_POST['to'];
+                $data['member']=$_POST['member'];
+
+                $data['user_id']=$user_id;
+                $model->editReservation($data,$reservation_id);
+                $this->redirect("/get-reservations");
+            }
+        }
+    }
+
+    public function deletereservationAction()
+    {
+        $reservation_id= $this->_request->getParam("id");
+        $model= new Application_Model_HotelReservation();
+        $model->cancelReservation($reservation_id);
+
+        $auth = Zend_Auth::getInstance();
+        $storage = $auth->getStorage();
+        $sessionRead = $storage->read();
+        if (!empty($sessionRead)) {
+            $user_name = $sessionRead->user_name;
+            $user_id=$sessionRead->user_id;
+        }
+
+        $this->redirect("/get-reservations");
+    }
+
+
+    // public function blockAction()
+    // {
+    //     $user_model = new Application_Model_User();
+    //     $us_id = $this->_request->getParam("uid");
+    //     $user = $user_model->blockUser($us_id);
+    //     $this->redirect("/user/list");
+    // }
+
 
     public function loginAction()
     {
@@ -331,8 +554,11 @@ class UserController extends Zend_Controller_Action
             else
             {
 
-                echo "<br>" ;
-                echo "invalid email or passsword";
+              
+                $message="invalid email or passsword";
+                $this->view->mes=$message;
+                 
+
             }
             }
 
@@ -451,6 +677,30 @@ Zend_Auth::getInstance()->clearIdentity();
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -21,6 +21,20 @@
           <actionMethod actionName="commentdelete"/>
           <actionMethod actionName="commentcreate"/>
           <actionMethod actionName="map"/>
+          <actionMethod actionName="makeReservation"/>
+          <actionMethod actionName="getReservations"/>
+          <actionMethod actionName="makeCarReserv"/>
+          <actionMethod actionName="getCarReservation"/>
+          <actionMethod actionName="updateRent"/>
+          <actionMethod actionName="deleterent"/>
+          <actionMethod actionName="updateReservation"/>
+          <actionMethod actionName="deletereservation"/>
+
+          <actionMethod actionName="listcountry"/>
+          <actionMethod actionName="listcity"/>
+          <actionMethod actionName="citydata"/>
+          <actionMethod actionName="home"/>
+
           <actionMethod actionName="showlocations"/>
           <actionMethod actionName="list"/>
           <actionMethod actionName="add"/>
@@ -46,9 +60,14 @@
           <actionMethod actionName="removecity"/>
           <actionMethod actionName="editcity"/>
           <actionMethod actionName="addcity"/>
+          <actionMethod actionName="gethotels"/>
+          <actionMethod actionName="updatehotel"/>
+          <actionMethod actionName="addhotel"/>
+          <actionMethod actionName="deletehotel"/>
           <actionMethod actionName="login"/>
           <actionMethod actionName="list"/>
           <actionMethod actionName="logout"/>
+          <actionMethod actionName="block"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -56,6 +75,12 @@
         <formFile formName="Addcity"/>
         <formFile formName="Addpost"/>
         <formFile formName="Addcomment"/>
+        <formFile formName="Updatehotel"/>
+        <formFile formName="Newhotel"/>
+        <formFile formName="HotelReservation"/>
+        <formFile formName="CarReservation"/>
+        <formFile formName="UpdateRent"/>
+        <formFile formName="UpdateRservation"/>
         <formFile formName="Addlocation"/>
         <formFile formName="Login"/>
         <formFile formName="Edit"/>
@@ -72,6 +97,9 @@
         <modelFile modelName="City"/>
         <modelFile modelName="Post"/>
         <modelFile modelName="Comment"/>
+        <modelFile modelName="Hotel"/>
+        <modelFile modelName="HotelReservation"/>
+        <modelFile modelName="CarReservation"/>
         <modelFile modelName="Location"/>
         <modelFile modelName="User"/>
         <modelFile modelName="Admin"/>
@@ -149,7 +177,54 @@
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="map"/>
           </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="gethotels"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="updatehotel"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="addhotel"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="deletehotel"/>
+          </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="makeReservation"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="getReservations"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="makeCarReserv"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="getCarReservation"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="updateRent"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="deleterent"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="updateReservation"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="deletereservation"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="listcountry"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="listcity"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="citydata"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="User">
+            <viewScriptFile forActionName="home"/>
+
             <viewScriptFile forActionName="showlocations"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
@@ -196,6 +271,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="logout"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="block"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

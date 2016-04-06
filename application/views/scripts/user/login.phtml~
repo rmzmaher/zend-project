@@ -1,4 +1,6 @@
-<br /><br />
-<div id="view-content">
-	<p>View script for controller <b>User</b> and script/action name <b>login</b></p>
-</div>
+<?php echo $this->mes ; ?>
+
+<?php echo $this->form ; ?>
+<?php echo '<a class="btn btn-default" href="' . htmlspecialchars( $this->facebook_url) . '"> Log in
+with Facebook! </a>';?> <span/>
+<a class='btn btn-default' href='/User/add'> Sign Up </a>

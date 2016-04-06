@@ -1,0 +1,33 @@
+<section id="testimonial">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <div class="testimonial-area">
+                                <div class="tm-header">
+                                    <h2>What people say about us</h2>
+                                </div>
+                                <div class="tm-contant">
+									<div class="tm-contant-items" id="slide-testimonial">
+										<?php
+			foreach ($this->countries as $key => $value)
+			{ 
+        
+        
+										echo "<div class='tm-contant-list item'>
+											<div class='tm-img'>
+												<img src='{$value['image']}' width='1200' height='300'class='img-rounded'>
+											</div>
+											<div class='tm-text'>
+												<p>{$value['description']}<span>- Ron Burgundy</span></p>
+											</div>
+										</div>";
+										}?>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .col-md-12 close -->
+                </div><!-- .row close -->
+            </div><!-- .container close -->
+        </section><!-- #testimonial close -->
