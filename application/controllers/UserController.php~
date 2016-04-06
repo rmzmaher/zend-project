@@ -5,9 +5,6 @@ class UserController extends Zend_Controller_Action
 
     public function init()
     {
-
-$admin = new Zend_Session_Namespace('admin_Auth');
-Zend_Session::namespaceUnset('admin_Auth');
      $authorization = Zend_Auth::getInstance();
             $fbsession = new Zend_Session_Namespace('facebook');
             if (!$authorization->hasIdentity() &&!isset($fbsession->first_name)) {
