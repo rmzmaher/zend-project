@@ -10,6 +10,7 @@
         <controllerFile controllerName="Index">
           <actionMethod actionName="index"/>
           <actionMethod actionName="list"/>
+          <actionMethod actionName="updatelocation"/>
         </controllerFile>
         <controllerFile controllerName="Error"/>
         <controllerFile controllerName="User">
@@ -29,12 +30,10 @@
           <actionMethod actionName="deleterent"/>
           <actionMethod actionName="updateReservation"/>
           <actionMethod actionName="deletereservation"/>
-
           <actionMethod actionName="listcountry"/>
           <actionMethod actionName="listcity"/>
           <actionMethod actionName="citydata"/>
           <actionMethod actionName="home"/>
-
           <actionMethod actionName="showlocations"/>
           <actionMethod actionName="list"/>
           <actionMethod actionName="add"/>
@@ -68,6 +67,9 @@
           <actionMethod actionName="list"/>
           <actionMethod actionName="logout"/>
           <actionMethod actionName="block"/>
+          <actionMethod actionName="updatelocation"/>
+          <actionMethod actionName="showlocation"/>
+          <actionMethod actionName="deletelocation"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -224,7 +226,6 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="home"/>
-
             <viewScriptFile forActionName="showlocations"/>
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
@@ -274,6 +275,18 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Admin">
             <viewScriptFile forActionName="block"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Index">
+            <viewScriptFile forActionName="updatelocation"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="updatelocation"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="showlocation"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="deletelocation"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

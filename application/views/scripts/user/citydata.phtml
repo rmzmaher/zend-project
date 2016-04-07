@@ -40,19 +40,16 @@
                                 
                                 <div class="support-link">
                                     <ul>
-                                        <li><a href="/user/postr/id/<?= $value['id'] ?>">EXPERIENCE</a></li>
-                                        
-                                        <li><a href="/user/map/id/<?= $value['id'] ?>">MAP</a></li>
-                                        
-                                        <li><a href="/user/showlocations/id/<?= $value['id'] ?>">LOCATIONS</a></li>
+                                        <li><a  href="/user/postr/id/<?= $value['id'] ?>">EXPERIENCES</a></li>
+                                        <li><a  href="/user/map/id/<?= $value['id'] ?>">MAP</a></li>
+                                        <li><a  href="/user/showlocations/id/<?= $value['id'] ?>">LOCATIONS</a></li>
                                         <?php $user=$this->user; ?>
-            <?php if($user){ ?>
-                <li><a href="">My BooKing</a></li>
-                <li><a href="/user/make-Reservation/cid/<?= $value['id'] ?>">Book hotel</a></li>
-                <li><a href="/user/make-car-reserv/id/<?= $value['id'] ?>">Rent cars</a></li>
-                <li><a href="/user/getCarReservation/id/<?= $user['id'] ?>">carreserved</a></li>
-                <li><a href="/user/postr/id/<?= $value['id'] ?>">EXPERIENCE</a></li>
-            <?php } ?>
+
+                                        <?php if($user){ ?>
+                                           <li> <a  href="/user/make-Reservation/cid/<?= $value['id'] ?>">Book hotel</a></li>
+                                           <li> <a  href="/user/make-car-reserv/city/<?= $value['id'] ?>">Rent cars</a><li>
+                                        <?php } ?>
+
                         
                                     </ul>
                                 </div>
@@ -77,7 +74,6 @@
           <a class="navbar-brand" href="/user/showlocations/id/<?= $value['id'] ?>">LOCATIONS</a>
             <?php $user=$this->user; ?>
             <?php if($user){ ?>
-                <a class="navbar-brand" href="">My BooKing</a>
                 <a class="navbar-brand" href="/user/make-Reservation/cid/<?= $value['id'] ?>">Book hotel</a>
                 <a class="navbar-brand" href="/user/make-car-reserv/id/<?= $value['id'] ?>">Rent cars</a>
             <?php } ?>

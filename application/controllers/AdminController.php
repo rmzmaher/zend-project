@@ -1,8 +1,9 @@
 <?php
 
 class AdminController extends Zend_Controller_Action
-{ 
-    public $country_id;
+{
+
+    public $country_id = null;
 
     public function init()
     {
@@ -265,7 +266,6 @@ $this->redirect("admin/login");
         $this->redirect('/admin/gethotels');
     }
 
-
     public function loginAction()
     {
         
@@ -307,7 +307,7 @@ $storage->write($authAdapter->getResultRowObject(array('email', 'id',
             $adminsession->first_name =$authAdapter->getResultRowObject(array('email', 'id','name'));
 
 // redirect to root index/index
-            return $this->redirect( '/admin/list');
+            return $this->redirect( '/admin/allcountry');
 
 
 
@@ -356,19 +356,62 @@ $this->redirect("/user/login");
 
     }
 
+    public function updatelocationAction()
+    {
+        
+
+
+                   $form = new Application_Form_Addlocation ();
+		    $user_model = new Application_Model_Location ();
+		    $id = $this->_request->getParam('lid');
+		    
+		   $user_data = $user_model-> getlocation_by_locationid($id)[0];
+
+
+		    $form->populate($user_data);
+		    $this->view->form = $form;
+
+
+		    $request = $this->getRequest ();
+		    if($request-> isPost()){
+		    if($form-> isValid($request-> getPost())){
+		    $load = new Zend_File_Transfer_Adapter_Http();
+		     $load->addFilter('Rename', '/var/www/html/zend-project/public/images/location/' . $_POST['name'] . '.jpg');
+		          $_POST['image'] = '/images/location/' . $_POST['name'] . '.jpg';
+		        $load->receive();
+		         
+		    $user_model-> updatelocation ($id, $_POST);
+		   
+		   $this->redirect('/admin/showlocation');
+    }
+
 
 }
 
 
+    }
+
+    public function showlocationAction()
+    {
+        $city_id= $this->_request->getParam("id");
+        $location_obj=new Application_Model_Location();
+	$locations = $location_obj->getlocations_by_city_id($city_id);
+	$this->view->location=$locations;
 
 
 
+    }
+
+    public function deletelocationAction()
+    {  $id = $this->_request->getParam('lid');
+        $cid = $this->_request->getParam('cid');
+   $location_obj=new Application_Model_Location();
+        $location_obj->delete_post("$id");
+         $this->redirect('/admin/showlocation/id/'.$cid);
+    }
 
 
-
-
-
-
+}
 
 
 

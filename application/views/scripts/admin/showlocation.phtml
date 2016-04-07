@@ -1,0 +1,21 @@
+<br /><br />
+<div id="view-content">
+	<p>View script for controller <b>Admin</b> and script/action name <b>showlocation</b></p>
+</div>
+
+
+
+<table class="table">
+<?php
+foreach($this->location as $key => $value)
+{
+echo "<tr>".
+
+"<td>" . $value['name'] . "</td>" .
+
+"<td> <a class='btn btn-success' href='/admin/updatelocation/lid/".$value['id']."/cid/".$value['city_id']."'> update </a>".
+"<td> <a class='btn btn-danger' href='/admin/deletelocation/lid/".$value['id']."/cid/".$value['city_id']."'>Delete </a>"
+."</tr>";
+}
+?>
+</table>
