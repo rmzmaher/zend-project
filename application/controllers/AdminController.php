@@ -205,6 +205,8 @@ $this->redirect("admin/login");
 
     public function gethotelsAction()
     {
+         $country_id= $this->_request->getParam("id");
+         $this->view->country=$country_id;
         $hotel_model=new Application_Model_Hotel();
         $all_hotels=$hotel_model->listAllHotels();
         $this->view->hotels=$all_hotels;

@@ -215,10 +215,13 @@ Zend_Session::namespaceUnset('admin_Auth');
     public function showlocationsAction()
     {
         // action body
+        $city_obj = new Application_Model_City();
         $location_obj=new Application_Model_Location();
         // geting city_id
         $city_id= $this->_request->getParam('id');
-
+        $one_city = $city_obj->one_city($city_id);
+        $this->view->city = $one_city;
+        //var_dump($one_city);
         $locations = $location_obj->getlocations_by_city_id($city_id);
         $paginator = Zend_Paginator::factory($locations);
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('/user/pagination.phtml');
@@ -354,11 +357,11 @@ Zend_Session::namespaceUnset('admin_Auth');
     {
         $country_obj= new Application_Model_Country();
         $city_obj= new Application_Model_City();
-        $all_country= $country_obj->all_country();
+        $all_country= $country_obj->country_rate();
         $this->view->countries = $all_country;
         //return $all_country;
 
-        $all_city= $city_obj->listcity();
+        $all_city= $city_obj->city_rate();
         $this->view->cities = $all_city;
         $country = new Zend_Session_Namespace('country');
         $country = $all_country;

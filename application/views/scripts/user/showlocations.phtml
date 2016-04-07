@@ -1,24 +1,43 @@
-<?php
+<section id="contant-2">
+		 <?php foreach ($this->city as $loc) {?> 
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="block-left">
+                       
+                            <div class="contant-2-img" alt="img">
+                               <h1><a href='/user/citydata/id/<?= $loc['id'] ?>'><?= $loc['name'] ?> city </a></h1>
+                           
+                            </div>
+                            </div>
+                    </div>
+                        </div>
+                    </div>
+                    	  <?php } ?>
+	<div class="container">
+                <div class="row">	
+	<?php
 	foreach ($this->paginator as $location) { ?>
-		<div class='container-fluid table-responsive' align="center">
-			<table class="table-responsive">
-				<tr>
-					<td>
-						<h1 align='center'> <?=  $location['name'] ?> </h1>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<img align="center" src="<?= $location['image'] ?>"   border=0 width=677 height=192>
-					</td>
-				</tr>
-				<tr>
-					<td>
-						<h3 align='center'> <?= $location['describtion'] ?> </h3>
-					</td>
-				</tr>
-				</table>
-		</div>
-	<?php } ?>
+				<div class="col-md-6">
+                        <div class="block-right">
+                            <div class="contant-2-text-area">
+                                <div class="contant-2-header">
+                                    <h1><?= $location['name']?></h1>
+                                </div>
+                                <div class="contant-2-text">
+                                  <img src="<?= $location['image'] ?>" width="300" height="300">
+                                   <p>
+                                   <?= $location['describtion'] ?></p>
+                       
+                                </div>
+                               
+                            </div>
+
+                       </div>
+                    </div><!-- .col-md-6 close -->
+                    <?php } ?>
+	 </div><!-- .row close -->
+            </div><!-- .container close -->
+        </section><!-- #contant-2 close -->
 
 <?php echo $this->paginator;?>
