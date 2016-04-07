@@ -417,28 +417,28 @@ width: 102px;}
 	6) Gallery Start
 ===========================*/
 
-#gallery{padding-top: 100px ; padding-bottom: 120px}
+#gallery{padding-top: 50px ; padding-bottom: 60px}
 .block-top{}
 .gallery-area{text-align: center;}
 .gallery-area h1{font-size: 36px; color:#636C6C; font-family: 'Raleway', sans-serif; font-weight: 700; margin: 0px; }
 .gallery-area p{color: #AFB8B8; font-size: 16px; font-family: 'Raleway', sans-serif; font-weight: 400; margin: 0px; padding-top:24px }
-#gallery .block-bottom{text-align: center;padding-top: 50px;}
+#gallery .block-bottom{text-align: center;padding-top: 30px;}
 .gallery-list{}
-.gallery-items{}
+.gallery-items-item {}
 .gallery-img{}
-.gallery-items-text{}
-.gallery-items-text p{color: #9ea5a5; font-size: 14px; margin: 0; padding-top: 45px;font-family: 'Raleway', sans-serif; font-weight: 400;}
-#gallery .owl-carousel .owl-controls{left: 0; margin-top: -40px; position: absolute; text-align: left; top: 50%; 
+.gallery-items-text{padding-top: 20px;}
+.gallery-items-text p{color: #9ea5a5; font-size: 14px; margin: 0px; padding-top: 0px;font-family: 'Raleway', sans-serif; font-weight: 400;}
+#gallery .owl-carousel .owl-controls{left: 0; margin-top: -50px; position: absolute; text-align: left; top: 50%; 
 width: 100%;}
-#gallery .owl-carousel .owl-controls .owl-buttons{}
+#gallery .owl-carousel .owl-controls .owl-buttons{padding-top: 0px;}
 #gallery .owl-carousel .owl-controls .owl-buttons div{color: #9fa9a9;font-size: 50px; display: inline-block}
 #gallery .owl-carousel .owl-controls .owl-buttons div.owl-prev{margin-left: 0px;}
 #gallery .owl-carousel .owl-controls .owl-buttons div.owl-next{position: absolute;right: 0px;}
 #gallery .owl-carousel .owl-controls .owl-buttons div i{}
 #gallery .owl-carousel .owl-controls .owl-buttons div i.fa-angle-left{}
 #gallery .owl-carousel .owl-controls .owl-buttons div i.fa-angle-right{}
-#owl-demo .item{margin: 3px; padding: 30px;}
-#owl-demo .item img{display: block;width: 100%;height: auto;}
+#owl-demo .item{margin: 30px; padding: 10px 20px;}
+#owl-demo .item img{border-radius:50%; display: block;width: 100%;height: 200px;}
 
 /*=========================
 	 Gallery close
@@ -474,22 +474,22 @@ width: 102px;}
 	8) testimonial Start
 ===========================*/
 
-#testimonial{text-align: center;padding-bottom: 110px;padding-top: 100px;}
+#testimonial{background: #F3F5F5;text-align: center;padding-bottom: 110px;padding-top: 50px;}
 #testimonial .block{}
 .testimonial-area{}
 .tm-header{}
-.tm-header h2{font-size: 36px;font-family: 'Raleway', sans-serif; font-weight: 700;color:#636C6C; margin: 0px; padding-bottom: 38px}
+.tm-header h2{font-size: 36px;font-family: 'Raleway', sans-serif; font-weight: 700;color:#636C6C; margin: 0px; padding-bottom: 15px}
 .tm-contant{}
 .tm-contant-items{}
 .tm-contant-list{}
 .tm-img{}
-.tm-img img{border-radius: 500px;margin: 0 auto;width: 100px; height: 100px;}
+.tm-img img{border-radius: 10px;margin: 0 auto;width: 1200px; height: 500px;}
 .tm-text{}
-.tm-text p{color:#8C9494; font-family: 'Droid Serif', serif; font-weight:400; font-style: italic; font-size: 24px; line-height: 24px;margin: 0;padding-bottom: 40px;padding-top: 45px;}
+.tm-text p{color:#8C9494; font-family: 'Droid Serif', serif; font-weight:400; font-style: italic; font-size: 24px; line-height: 24px;margin: 0;padding-bottom: 20px;padding-top: -20px;}
 .tm-text p span{font-style: normal; display: block; color: #5DCA88;font-family: 'Raleway', sans-serif; font-weight: 400; padding-top: 28px }
 #testimonial .owl-carousel .owl-controls{}
 #testimonial .owl-carousel .owl-controls .owl-pagination{text-align: center}
-#testimonial .owl-carousel .owl-controls .owl-pagination div{background:#8c9494;
+#testimonial .owl-carousel .owl-controls .owl-pagination div{background:#B0DBE0;
 border-radius: 500px;
 display: inline-block;
 height: 11px;
@@ -529,10 +529,11 @@ background: #FFFFFF; width: 555px;}
 	9) footer Start
 ===========================*/
 
-#footer{background: #2D312F;text-align: center; padding-top: 75px; padding-bottom: 50px;}
+#footer{background: #B0DBE0;text-align: center; height:50px; 
+}
 #footer .block{}
-.footer-contant{}
-.footer-contant h3{color:#8C9494; font-size: 24px; font-family: 'Raleway', sans-serif; font-weight: 400;margin: 0px; padding-bottom: 30px;}
+.container{padding-bottom: 0px;}
+.footer-contant h3{color:#8C9494; font-size: 24px; font-family: 'Raleway', sans-serif; font-weight: 400;margin: 0px; padding-bottom: 3px;}
 .social-icon{}
 .social-icon a{margin-right: 10px;}
 .social-icon a i{background: #5d6461;
@@ -542,15 +543,25 @@ font-size: 20px;
 height: 42px;
 padding-top: 11px;
 width: 42px;}
-.support-link{padding-top: 70px;}
-.support-link ul{margin:0px; padding: 0px; list-style: none;}
+.support-link{margin-top:15px;}
+.support-link ul{list-style: none;}
 .support-link ul li{display: inline-block; padding: 0px 10px}
 .support-link ul li a{display: inline-block; color: #8C9494; font-size: 14px}
 
 /*=========================
 	 footer CLOSE
 ===========================*/
-
+#footercopy{background: #B0DBE0;text-align: center; height:50px; padding-bottom: 0px;margin-bottom: 0px;
+}
+.copyright {display: inline-block; color: #8C9494; font-size: 14px;}
+.copyright p
+{
+    text-align: center;
+}
+.copyright p a {
+    text-decoration: none;
+    color: #eee;
+}
 
 #service .block-bottom{}
 #service .service-tab{}

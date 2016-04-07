@@ -4,6 +4,15 @@ class Application_Model_City extends Zend_Db_Table_Abstract
 {
 	protected $_name = 'city';
 
+//	protected $_referenceMap = array('post'=>array(
+//        'columns'=>array('country_id'),
+//        'refTableClass'=>'Application_Model_Country',
+//        'refColumns'=>array('id'),
+//        'onDelete'=>'cascade'
+//
+//    ));
+
+
 	protected $_referenceMap = array('post'=>array(
         'columns'=>array('country_id'),
         'refTableClass'=>'Application_Model_Country',
@@ -11,6 +20,7 @@ class Application_Model_City extends Zend_Db_Table_Abstract
         'onDelete'=>'cascade'
 
     ));
+
 	function listcity()
 	{
 		return $this->fetchAll()->toArray();
@@ -18,7 +28,10 @@ class Application_Model_City extends Zend_Db_Table_Abstract
 
 	function all_city($country_id)
 	{
-		return $this->find($country_id)->toArray();
+		$query=$this->select();
+		$query->where("country_id=$country_id");
+		return $this->fetchAll($query)->toArray();
+//		return $this->find($country_id)->toArray();
 	}
 
 	function one_city($id)
@@ -42,7 +55,6 @@ class Application_Model_City extends Zend_Db_Table_Abstract
 		$row->description=$countrydata['description'];
 		$row->country_id=$countrydata['country_id'];
 		$row->save();
-
 	}
 
 	function edit_city($id,$countrydata)

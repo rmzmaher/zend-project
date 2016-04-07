@@ -31,35 +31,63 @@
         }?>
       </div>
     </div>
-    <div class="container">
-	<!-- <div class="row">
-<div class="col-xs-2"></div>
- 
-  	<div class="col-xs-8">
-		<table class="table">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Name</th>
-			</tr>
-		</thead> -->
+    <!-- <div class="container">
+	
 		<div class='row'>
 		<?php
-			foreach ($this->cities as $key => $value)
-			{
-				echo "
-        <div class='col-xs-4'>
-          <h2>{$value['name']}</h2>";
-				$id =$value['id'];
-				// echo "<tr> <td> <a href='/user/citydata/id/{$id}'> $id</a> </td> <td><img src='{$value['image']}' width='90' class='img-rounded'> {$value['name']}</td> <td>{$value['rating']}</td><td> {$value['description']}</td></tr>";
+			// foreach ($this->cities as $key => $value)
+			// {
+			// 	echo "
+   //      <div class='col-xs-4'>
+   //        <h2>{$value['name']}</h2>";
+			// 	$id =$value['id'];
+			// 	// echo "<tr> <td> <a href='/user/citydata/id/{$id}'> $id</a> </td> <td><img src='{$value['image']}' width='90' class='img-rounded'> {$value['name']}</td> <td>{$value['rating']}</td><td> {$value['description']}</td></tr>";
 
-				echo "<p><img src='{$value['image']}' width='90' height='90' class='img-rounded'></p>
-				<p>{$value['description']}</p>
-          <p><a class='btn btn-default' href='/user/citydata/id/{$id}' role='button'>View details &raquo;</a></p>";
-				echo "</div>";
-			}
+			// 	echo "<p><img src='{$value['image']}' width='90' height='90' class='img-rounded'></p>
+			// 	<p>{$value['description']}</p>
+   //        <p><a class='btn btn-default' href='/user/citydata/id/{$id}' role='button'>View details &raquo;</a></p>";
+			// 	echo "</div>";
+			
 		?>
-		<!-- </table> -->
+		
 		</div>
 	</div>
-</div>
+</div> -->
+<section id="gallery">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block-top">
+                            <div class="gallery-area">
+                                <h1>Our CITIES</h1>
+                    
+                            </div>
+                        </div>
+                    </div><!-- .col-md-12 -->
+                </div><!-- .row close -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block-bottom">
+                            <div class="gallery-list" id="owl-demo">
+                                
+                                <?php
+            foreach ($this->cities as $key => $value)
+            { 
+        
+        
+                                        echo "<div class='gallery-items item'>
+                                            <div class='gallery-img'>
+                                                <img src='{$value['image']}' class='img-thumbnail'>
+                                            </div>
+                                            <div class='gallery-items-text'>
+                                                <p><span><a href='/user/citydata/id/{$value['id']}'>{$value['name']}</a></span></p>
+                                            </div>
+                                        </div>";
+                                        }?>
+                            </div>
+                        </div>
+                    </div><!-- .col-md-12 close -->
+                </div><!-- .row close -->
+            </div><!-- .container close -->
+        </section><!-- #gallery close -->
+

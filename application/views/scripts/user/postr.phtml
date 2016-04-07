@@ -21,6 +21,7 @@ $com_usr=$this->com_usr	;
 ?>
 <?php $city_id=$this->city_id ?>
 <?php $user=$this->user ?>
+
 <?php $name=$this->name?>
 <div align="center">
 	<h1 >Experience</h1>
@@ -43,16 +44,26 @@ $com_usr=$this->com_usr	;
 					</a>
 						<div style="display:inline">
 						<h2 > <?= $post['title'] ?> </h2>
+<<<<<<< HEAD
 							</div>
 						<p> <?= $post['content'] ?></p>
 
+=======
+
+						<h3> <?= $post['content'] ?></h3>
+>>>>>>> b64ee37d6ce24cba64d96929d956b5413138eaf4
 						<?php $post_id= $post['id']; ?>
 					<input type="hidden" id="usr" value='<?= $user ?>' >
 					<input type="hidden" id="name" value='<?= $name ?>' >
 					<input type='hidden' id='pid' value='<?= $post_id?>'>
 						<?php if($post['user_id']== $user ){ ?>
+
+							<a class='btn btn-danger' href='/user/postdelete/id/<?= $post['id'] ?> '>delete</a>
+							<a class='btn btn-warning' href='/user/postupdate/id/<?= $post['id'] ?> '>Update</a>
+
 							<a class='btn btn-danger' href='/user/postdelete/id/<?= $post['id'] ?>/cityid/<?=$city_id ?> '>delete</a>
 							<a class='btn btn-warning' href='/user/postupdate/id/<?= $post['id']?>/cityid/<?=$city_id ?>  '>Update</a>
+
 							<?php } ?>
 						<?php if($user) { ?>
 							<br/>
@@ -82,14 +93,28 @@ $com_usr=$this->com_usr	;
 								<?php } ?>
 									<?php $comment_id= $comment['id']; ?>
 								<input type='hidden' id='cid' value='<?= $comment_id ?> '>
+
+
+							<a class='btn btn-danger' href='/user/commentdelete/id/<?= $comment['id']?> '>delete</a>
+
 							<?php } ?>
 						<?php } ?>
 				</div>
 			</div>
+<<<<<<< HEAD
 	<?php } ?>
 		</div>
+=======
+
+			</div>
+			</div>
+<?php } ?>
+
+	
+>>>>>>> b64ee37d6ce24cba64d96929d956b5413138eaf4
 	</body>
 </html>
+
 
 <script src="/jquery-1.12.1.min.js"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>

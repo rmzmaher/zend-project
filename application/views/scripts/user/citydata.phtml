@@ -30,7 +30,38 @@
         }?>
       </div>
     </div>
-    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+    
+    <section id="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block">
+                            <div class="footer-contant">
+                                
+                                <div class="support-link">
+                                    <ul>
+                                        <li><a href="/user/postr/id/<?= $value['id'] ?>">EXPERIENCE</a></li>
+                                        
+                                        <li><a href="/user/map/id/<?= $value['id'] ?>">MAP</a></li>
+                                        
+                                        <li><a href="/user/showlocations/id/<?= $value['id'] ?>">LOCATIONS</a></li>
+                                        <?php $user=$this->user; ?>
+            <?php if($user){ ?>
+                <li><a href="">My BooKing</a></li>
+                <li><a href="/user/make-Reservation/cid/<?= $value['id'] ?>">Book hotel</a></li>
+                <li><a href="/user/make-car-reserv/id/<?= $value['id'] ?>">Rent cars</a></li>
+            <?php } ?>
+                        
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- col-md-12 -->
+                </div><!-- .row -->
+            </div><!-- .container -->
+        </section><!-- #footer -->
+
+    <!-- <nav class="navbar navbar-inverse navbar-fixed-bottom">
       <div class="container">
         <div class="navbar-footer">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -51,5 +82,6 @@
         
       </div>
     </nav>
+ -->
 	
 </div>

@@ -191,7 +191,7 @@ $this->redirect("admin/login");
                 $load = new Zend_File_Transfer_Adapter_Http();
                 //$image=$_FILES['image']['name'];
 
-                $load->addFilter('Rename','/var/www/html/zend_pro/public/images/city/'.$_POST['name'].'.jpg');
+                $load->addFilter('Rename','/var/www/html/zend_project/public/images/city/'.$_POST['name'].'.jpg');
 
                 $load->receive();
                 $_POST['image'] = '/images/city/' . $_POST['name'] . '.jpg';
@@ -235,7 +235,10 @@ $this->redirect("admin/login");
 
     public function addhotelAction()
     {
+        $country_id= $this->_request->getParam("id");
+        Application_Form_Newhotel::$country_id=$country_id;
         $newhotel_form= new Application_Form_Newhotel();
+        //$newhotel_form->setCountryId($country_id);
         $this->view->newhotel=$newhotel_form;
         $hotel_model=new Application_Model_Hotel();
         $request=$this->getRequest();
@@ -245,7 +248,7 @@ $this->redirect("admin/login");
             if($newhotel_form->isValid($request->getPost()))
             {
                 $hotel_model->addHotel($_POST);
-                $this->redirect('/admin/gethotels');
+                $this->redirect('/visit/gethotels');
                 //for test
                 //$this->view->inserteddata=$_POST;
             }

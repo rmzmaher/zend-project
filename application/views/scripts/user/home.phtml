@@ -1,3 +1,4 @@
+
 <section id="testimonial">
             <div class="container">
                 <div class="row">
@@ -5,7 +6,7 @@
                         <div class="block">
                             <div class="testimonial-area">
                                 <div class="tm-header">
-                                    <h2>What people say about us</h2>
+                                    <h2>Visit Country You liked it</h2>
                                 </div>
                                 <div class="tm-contant">
 									<div class="tm-contant-items" id="slide-testimonial">
@@ -16,10 +17,10 @@
         
 										echo "<div class='tm-contant-list item'>
 											<div class='tm-img'>
-												<img src='{$value['image']}' width='1200' height='300'class='img-rounded'>
+												<img src='{$value['image']}' width='1200' height='300'class='img-thumbnail'>
 											</div>
 											<div class='tm-text'>
-												<p>{$value['description']}<span>- Ron Burgundy</span></p>
+												<p><span><a href='/user/listcountry/id/{$value['id']}'>{$value['name']}</a></span></p>
 											</div>
 										</div>";
 										}?>
@@ -31,3 +32,43 @@
                 </div><!-- .row close -->
             </div><!-- .container close -->
         </section><!-- #testimonial close -->
+
+        <section id="gallery">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block-top">
+                            <div class="gallery-area">
+                                <h1>Our CITIES</h1>
+                    
+                            </div>
+                        </div>
+                    </div><!-- .col-md-12 -->
+                </div><!-- .row close -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="block-bottom">
+                            <div class="gallery-list" id="owl-demo">
+                                
+                                <?php
+            foreach ($this->cities as $key => $value)
+            { 
+        
+        
+                                        echo "<div class='gallery-items item'>
+                                            <div class='gallery-img'>
+                                                <img src='{$value['image']}' class='img-thumbnail'>
+                                            </div>
+                                            <div class='gallery-items-text'>
+                                                <p><span><a href='/user/citydata/id/{$value['id']}'>{$value['name']}</a></span></p>
+                                            </div>
+                                        </div>";
+                                        }?>
+                            </div>
+                        </div>
+                    </div><!-- .col-md-12 close -->
+                </div><!-- .row close -->
+            </div><!-- .container close -->
+        </section><!-- #gallery close -->
+
+
