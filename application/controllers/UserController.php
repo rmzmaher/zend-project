@@ -1,3 +1,4 @@
+
 <?php
 
 class UserController extends Zend_Controller_Action
@@ -6,18 +7,16 @@ class UserController extends Zend_Controller_Action
     public function init()
     {
 
-$admin = new Zend_Session_Namespace('admin_Auth');
-Zend_Session::namespaceUnset('admin_Auth');
-     $authorization = Zend_Auth::getInstance();
-            $fbsession = new Zend_Session_Namespace('facebook');
-            if (!$authorization->hasIdentity() &&!isset($fbsession->first_name)) {
-                if ($this->_request->getActionName() != 'login' &&
-                        $this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'fb') {
-                        $this->redirect("User/login");
-                        }
+        $admin = new Zend_Session_Namespace('admin_Auth');
+        Zend_Session::namespaceUnset('admin_Auth');
+        $authorization = Zend_Auth::getInstance();
+        $fbsession = new Zend_Session_Namespace('facebook');
+        if (!$authorization->hasIdentity() &&!isset($fbsession->first_name)) {
+            if ($this->_request->getActionName() != 'login' && $this->_request->getActionName() != 'add' && $this->_request->getActionName() != 'fb') {
+                $this->redirect("User/login");
+                }
             }
-            $country_obj= new Application_Model_Country();
-        
+        $country_obj= new Application_Model_Country();
         $all_country= $country_obj->all_country();
         $this->view->countries = $all_country;
     }
@@ -232,8 +231,8 @@ Zend_Session::namespaceUnset('admin_Auth');
 /// list users won't be here in admin panel
     public function listAction()
     {
-         $user_model = new Application_Model_User();
-       $this->view->users = $user_model->listUsers();
+        $user_model = new Application_Model_User();
+        $this->view->users = $user_model->listUsers();
     }
 
     /// signup action
@@ -357,11 +356,10 @@ Zend_Session::namespaceUnset('admin_Auth');
         $all_country= $country_obj->all_country();
         $this->view->countries = $all_country;
         //return $all_country;
-
         $all_city= $city_obj->listcity();
         $this->view->cities = $all_city;
-        $country = new Zend_Session_Namespace('country');
-        $country = $all_country;
+//        $country = new Zend_Session_Namespace('country');
+//        $country = $all_country;
     }
 
 
@@ -562,55 +560,45 @@ Zend_Session::namespaceUnset('admin_Auth');
     public function loginAction()
     {
         
-            $login_form = new Application_Form_Login( );
-            $this->view->form=$login_form;
+        $login_form = new Application_Form_Login();
+        $this->view->form=$login_form;
 
-            if ($this->_request->isPost()) {
+        if ($this->_request->isPost())
+        {
             if ($login_form->isValid($this->_request->getPost( ))) {
-
                 $email = $this->_request->getParam('email');
                 $password = $this->_request->getParam('passwd');
 
-                //echo $password;
                 // get the default db adapter
-                $db = Zend_Db_Table::getDefaultAdapter( );
+                $db = Zend_Db_Table::getDefaultAdapter();
                 //create the auth adapter
-                $authAdapter = new Zend_Auth_Adapter_DbTable($db, 'user', "email",
-                'passwd');
+                $authAdapter = new Zend_Auth_Adapter_DbTable($db, 'user', "email", 'passwd');
                 $authAdapter->setIdentity($email);
                 $authAdapter->setCredential($password);
                 //authenticate
-                $result = $authAdapter->authenticate( );
+                $result = $authAdapter->authenticate();
 
+                if ($result->isValid()) {
 
-            if ($result->isValid( )) {
+                    //if the user is valid register his info in session
+                    $auth = Zend_Auth::getInstance();
+                    $storage = $auth->getStorage();
+                    // write in session email & id & first_name
+                    $storage->write($authAdapter->getResultRowObject(array('email', 'id', 'username')));
+                    // redirect to root index/index
+                    $this->redirect('/user/home');
+                } else {
 
+                    $message = "invalid email or passsword";
+                    $this->view->mes = $message;
 
-                $auth = Zend_Auth::getInstance( );
-                //if the user is valid register his info in session
-                $auth = Zend_Auth::getInstance();
-                $storage = $auth->getStorage();
-                // write in session email & id & first_name
-                $storage->write($authAdapter->getResultRowObject(array('email', 'id',
-                'username')));
-                // redirect to root index/index
-                return $this->redirect( '/user/home');
-            }
-            else
-            {
-
-              
-                $message="invalid email or passsword";
-                $this->view->mes=$message;
-                 
-
-            }
+                }
             }
 
 
-    }
+        }
 
-    $fb = new Facebook\Facebook([
+        $fb = new Facebook\Facebook([
             'app_id' => '1053124444745810', // Replace {app-id} with your app id
             'app_secret' => 'f59c1160c1b299e2201e223fd09cdb85',
             'default_graph_version' => 'v2.2',

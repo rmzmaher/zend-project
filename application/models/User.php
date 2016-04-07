@@ -12,14 +12,13 @@ function addNewuser($userData)
     $row->email = $userData['email'];
     $row->gender = $userData['gender'];
     $row->passwd=$userData['passwd'];
-
     $row->save();
 }
 
 
 function listUsers()
 {
-    return $this-> fetchAll() ->toArray();
+    return $this-> fetchAll()->toArray();
 }
 
 function userDetails($userid)
