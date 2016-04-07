@@ -16,105 +16,80 @@
 </head>
 <body>
 <div class='container-fluid  table-responsive'>
-<?php
-$com_usr=$this->com_usr	;
-?>
-<?php $city_id=$this->city_id ?>
-<?php $user=$this->user ?>
-
-<?php $name=$this->name?>
-<div align="center">
-	<h1 >Experience</h1>
-	<a class='btn btn-info btn-sm '  href='/user/postcreate/id/<?= $city_id ?> '> <span class="glyphicon glyphicon-plus"></span> Share Your Experience </a>
-</div>
-		<?php foreach ($this->pos as $post) { ?>
-			<div class='container-fluid'>
-				<div class='container post table-responsive row'>
-					<!-- experience -->
-					<br/>
-					<h4><small> RECENT POSTS </small></h4>
-						<hr>
-					<?php foreach ($this->pos_usr as $pos_usr) {
-						if($post['user_id']== $pos_usr['id']) { ?>
-							<h4><?= $pos_usr['username'] ?><small>  <span class="glyphicon glyphicon-envelope"></span>  <?= $pos_usr['email'] ?></small></h4>
-						<?php } ?>
+	<?php
+	$com_usr=$this->com_usr	;
+	?>
+	<?php $city_id=$this->city_id ?>
+	<?php $user=$this->user ?>
+	<?php $name=$this->name?>
+	<div align="center">
+		<h1 >Experience</h1>
+		<a class='btn btn-info btn-sm '  href='/user/postcreate/id/<?= $city_id ?> '> <span class="glyphicon glyphicon-plus"></span> Share Your Experience </a>
+	</div>
+	<?php foreach ($this->pos as $post) { ?>
+		<div class='container-fluid'>
+			<div class='container post table-responsive row'>
+				<!-- experience -->
+				<br/>
+				<h4><small> RECENT POSTS </small></h4>
+				<hr>
+				<?php foreach ($this->pos_usr as $pos_usr) {
+					if($post['user_id']== $pos_usr['id']) { ?>
+						<h4><?= $pos_usr['username'] ?><small>  <span class="glyphicon glyphicon-envelope"></span>  <?= $pos_usr['email'] ?></small></h4>
 					<?php } ?>
-					<a class="pull-right" style="margin-right: 10%">
-						<img class="media-object" alt="" src="<?= $post['image'] ?>" border="0" width=200 height=150 >
-					</a>
-						<div style="display:inline">
-						<h2 > <?= $post['title'] ?> </h2>
-<<<<<<< HEAD
-							</div>
-						<p> <?= $post['content'] ?></p>
-
-=======
-
-						<h3> <?= $post['content'] ?></h3>
->>>>>>> b64ee37d6ce24cba64d96929d956b5413138eaf4
-						<?php $post_id= $post['id']; ?>
-					<input type="hidden" id="usr" value='<?= $user ?>' >
-					<input type="hidden" id="name" value='<?= $name ?>' >
-					<input type='hidden' id='pid' value='<?= $post_id?>'>
-						<?php if($post['user_id']== $user ){ ?>
-
-							<a class='btn btn-danger' href='/user/postdelete/id/<?= $post['id'] ?> '>delete</a>
-							<a class='btn btn-warning' href='/user/postupdate/id/<?= $post['id'] ?> '>Update</a>
-
-							<a class='btn btn-danger' href='/user/postdelete/id/<?= $post['id'] ?>/cityid/<?=$city_id ?> '>delete</a>
-							<a class='btn btn-warning' href='/user/postupdate/id/<?= $post['id']?>/cityid/<?=$city_id ?>  '>Update</a>
-
-							<?php } ?>
-						<?php if($user) { ?>
-							<br/>
-							<form role="form">
-								<h5>Leave a Comment:</h5>
-								<div class="form-group">
-									<br/><textarea name="comment" rows="3" class="form-control" form="usrform" id='comment' placeholder="Enter comment here"></textarea>
-								</div>
-								<br/><a class='btn btn-success addcom' id='<?= $post_id ?>' >ADD COMMENT</a>
-							</form>
-							<br><br>
-						 <?php } ?>
+				<?php } ?>
+				<a class="pull-right" style="margin-right: 10%">
+					<img class="media-object" alt="" src="<?= $post['image'] ?>" border="0" width=200 height=150 >
+				</a>
+				<div style="display:inline">
+					<h2 > <?= $post['title'] ?> </h2>
 				</div>
-					<!-- comments with delete and update -->
-				<div class='container maincomment table-responsive well' id='maincomment'>
-					<p><span class="badge">c</span> Comments:</p><br>
-					<?php foreach ($this->com as $comment) {
-						if($post['id']== $comment['post_id']) { ?>
-							<?php foreach ($this->pos_usr as $pos_usr) {
-								if($comment['user_id']== $pos_usr['id']) { ?>
-									<div><small>  <?= $pos_usr['username'] ?></small></div>
-								<?php } ?>
-							<?php } ?>
-										<br/><textarea readonly="1" >  <?= $comment['content'] ?> </textarea>
-							<?php if($comment['user_id']== $user ){ ?>
-										<a class='btn btn-danger btn-xs' href='/user/commentdelete/id/<?= $comment['id']?>'>delete</a>
-								<?php } ?>
-									<?php $comment_id= $comment['id']; ?>
-								<input type='hidden' id='cid' value='<?= $comment_id ?> '>
+				<p> <?= $post['content'] ?></p>
 
-
-							<a class='btn btn-danger' href='/user/commentdelete/id/<?= $comment['id']?> '>delete</a>
-
+				<?php $post_id= $post['id']; ?>
+				<input type="hidden" id="usr" value='<?= $user ?>' >
+				<input type="hidden" id="name" value='<?= $name ?>' >
+				<input type='hidden' id='pid' value='<?= $post_id?>'>
+				<?php if($post['user_id']== $user ){ ?>
+					<a class='btn btn-danger' href='/user/postdelete/id/<?= $post['id'] ?>/cityid/<?=$city_id ?> '>delete</a>
+					<a class='btn btn-warning' href='/user/postupdate/id/<?= $post['id']?>/cityid/<?=$city_id ?>  '>Update</a>
+				<?php } ?>
+				<?php if($user) { ?>
+					<br/>
+					<form role="form">
+						<h5>Leave a Comment:</h5>
+						<div class="form-group">
+							<br/><textarea name="comment" rows="3" class="form-control" form="usrform" id='comment' placeholder="Enter comment here"></textarea>
+						</div>
+						<br/><a class='btn btn-success addcom' id='<?= $post_id ?>' >ADD COMMENT</a>
+					</form>
+					<br><br>
+				<?php } ?>
+			</div>
+			<!-- comments with delete and update -->
+			<div class='container maincomment table-responsive well' id='maincomment'>
+				<p><span class="badge">c</span> Comments:</p><br>
+				<?php foreach ($this->com as $comment) {
+					if($post['id']== $comment['post_id']) { ?>
+						<?php foreach ($this->pos_usr as $pos_usr) {
+							if($comment['user_id']== $pos_usr['id']) { ?>
+								<div><small>  <?= $pos_usr['username'] ?></small></div>
 							<?php } ?>
 						<?php } ?>
-				</div>
+						<br/><textarea readonly="1" >  <?= $comment['content'] ?> </textarea>
+						<?php if($comment['user_id']== $user ){ ?>
+							<a class='btn btn-danger btn-xs' href='/user/commentdelete/id/<?= $comment['id']?>'>delete</a>
+						<?php } ?>
+						<?php $comment_id= $comment['id']; ?>
+						<input type='hidden' id='cid' value='<?= $comment_id ?> '>
+					<?php } ?>
+				<?php } ?>
 			</div>
-<<<<<<< HEAD
-	<?php } ?>
 		</div>
-=======
-
-			</div>
-			</div>
-<?php } ?>
-
-	
->>>>>>> b64ee37d6ce24cba64d96929d956b5413138eaf4
-	</body>
+	<?php } ?>
+</div>
+</body>
 </html>
-
 
 <script src="/jquery-1.12.1.min.js"></script>
 <script src="/bootstrap/js/bootstrap.min.js"></script>

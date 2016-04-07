@@ -165,7 +165,6 @@ Zend_Session::namespaceUnset('admin_Auth');
         // action body
         $comment_obj=new Application_Model_Comment();
         $id=$this->_request->getParam('id');
-        //echo $id;die();
         $comment_obj->delete_comment($id);
         $this->redirect('/user/postr/');
     }
