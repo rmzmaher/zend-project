@@ -567,7 +567,7 @@ class UserController extends Zend_Controller_Action
         {
             if ($login_form->isValid($this->_request->getPost( ))) {
                 $email = $this->_request->getParam('email');
-                $password = $this->_request->getParam('passwd');
+                $password = $this->_request->getParam('password');
 
                 // get the default db adapter
                 $db = Zend_Db_Table::getDefaultAdapter();
