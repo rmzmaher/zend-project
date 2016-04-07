@@ -18,6 +18,7 @@ class Application_Model_Comment extends Zend_Db_Table_Abstract
         $row->post_id=$commentData['post_id'];
         $row->content = $commentData['content'];
         $row->save();
+        return $row['id'];
     }
 
 // get comment by post id

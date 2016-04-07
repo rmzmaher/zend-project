@@ -148,7 +148,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         //echo "$id";
         $post_obj->delete_post($id);
         // geting city_id
-        $city_id= $this->_request->getParam('cityid');
+        $city_id= $this->_request->getParam('cid');
 
         $this->redirect('/user/postr/id/'.$city_id.'');
 
@@ -193,8 +193,9 @@ Zend_Session::namespaceUnset('admin_Auth');
         $req=$this->getRequest();
         if($req->isPost()){
                 $com_obj=new Application_Model_Comment();
-                $com_obj->create_comment($req->getParams());
+               echo $com_obj->create_comment($req->getParams());
             }
+        //$comment_id.;;
     }
 
     public function mapAction()

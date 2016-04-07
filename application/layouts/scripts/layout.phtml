@@ -66,9 +66,15 @@ if (!empty($sessionRead)) {
         $name = $sessionRead->username; ?>
 
      <ul class="nav navbar-nav navbar-right"><!-- right side data -->
-         <li><a class="navbar-brand"> Welcome <?=$name?></a></li>
-        <li class="dropdown">
-            <a class="btn btn-default navbar-btn" href="<?php echo $this->baseUrl() ?>/User/logout"> Logout </a>
+         <li>
+             <a class="navbar-brand" > Welcome <?=$name?></a>
+         </li>
+         <li>
+             <a  href="/user/get-reservations"> <i class="glyphicon glyphicon-user"></i>Your Hotel Reservations </a>
+         </li>
+         <li><a  href="/user/get-reservations"><i class="glyphicon glyphicon-user"></i> Your Car Rents </a></li>
+        <li>
+            <a class="btn-default" href="<?php echo $this->baseUrl() ?>/User/logout">Logout</a>
         </li>
       </ul>
 <?php
