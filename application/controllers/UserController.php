@@ -150,7 +150,7 @@ class UserController extends Zend_Controller_Action
         //echo "$id";
         $post_obj->delete_post($id);
         // geting city_id
-        $city_id= $this->_request->getParam('cityid');
+        $city_id= $this->_request->getParam('cid');
 
         $this->redirect('/user/postr/id/'.$city_id.'');
 
@@ -164,7 +164,6 @@ class UserController extends Zend_Controller_Action
         // action body
         $comment_obj=new Application_Model_Comment();
         $id=$this->_request->getParam('id');
-        //echo $id;die();
         $comment_obj->delete_comment($id);
         $this->redirect('/user/postr/');
     }
@@ -195,8 +194,9 @@ class UserController extends Zend_Controller_Action
         $req=$this->getRequest();
         if($req->isPost()){
                 $com_obj=new Application_Model_Comment();
-                $com_obj->create_comment($req->getParams());
+               echo $com_obj->create_comment($req->getParams());
             }
+        //$comment_id.;;
     }
 
     public function mapAction()

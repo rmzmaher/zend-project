@@ -13,12 +13,18 @@ class IndexController extends Zend_Controller_Action
         // action body
     }
 
-
     public function listAction()
+    {
+        // action body
+    }
+
+    public function updatelocationAction()
     {
         // action body
     }
 
 
 }
+
+
 
