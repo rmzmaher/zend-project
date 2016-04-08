@@ -12,12 +12,16 @@ class Application_Form_UpdateRent extends Zend_Form
         $id =new Zend_Form_Element_Hidden('id');
         $user_id=new Zend_Form_Element_Hidden('user_id');
 
-        $location= new Zend_Form_Element_Text('location');
+        $location = new Zend_Form_Element_Select('location');
+        $location->setAttrib('class' ,'form-control');
+        $location_obj= new Application_Model_Location();
+        //$location_obj=new Application_mode
+        $all_locations =$location_obj->get_locations();
+        foreach ($all_locations as $key=>$value)
+        {
+            $location->addMultiOption($value['id'],$value['name']);
+        }
         $location->setLabel('Location :');
-        $location->setAttribs(array(
-            'placeholder'=>' Location',
-            'class'=>'form-control'
-        ));
 
         $from= new Zend_Form_Element_Text('from');
         $from->setLabel('From :');

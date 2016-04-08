@@ -71,6 +71,10 @@ public function updatelocation($locationid,$locationData)
 
     }
 
+    public function get_locations()
+    {
+        return $this->fetchAll()->toArray();
+    }
 
  
 
