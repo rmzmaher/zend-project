@@ -44,10 +44,12 @@
                                         <li><a  href="/user/map/id/<?= $value['id'] ?>">MAP</a></li>
                                         <li><a  href="/user/showlocations/id/<?= $value['id'] ?>">LOCATIONS</a></li>
                                         <?php $user=$this->user; ?>
+
                                         <?php if($user){ ?>
                                            <li> <a  href="/user/make-Reservation/cid/<?= $value['id'] ?>">Book hotel</a></li>
-                                           <li> <a  href="/user/make-car-reserv/id/<?= $value['id'] ?>">Rent cars</a><li>
+                                           <li> <a  href="/user/make-car-reserv/city/<?= $value['id'] ?>">Rent cars</a><li>
                                         <?php } ?>
+
                         
                                     </ul>
                                 </div>

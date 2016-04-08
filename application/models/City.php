@@ -20,7 +20,8 @@ class Application_Model_City extends Zend_Db_Table_Abstract
         'onDelete'=>'cascade'
 
     ));
-
+	function city_rate()
+	{return $this->fetchAll(null,"rating DESC",6)->toArray();}
 	function listcity()
 	{
 		return $this->fetchAll()->toArray();

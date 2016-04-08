@@ -3,8 +3,10 @@
 class Application_Model_Country extends Zend_Db_Table_Abstract
 {
 	protected $_name = 'country';
-	protected $_dependentTables= array('Application_Model_City');
+	//protected $_dependentTables= array('Application_Model_City');
 
+	function country_rate()
+	{return $this->fetchAll(null,"rating DESC",6)->toArray();}
 	function all_country()
 	{
 		return $this->fetchAll()->toArray();

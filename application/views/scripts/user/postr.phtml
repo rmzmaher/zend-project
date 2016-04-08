@@ -73,14 +73,16 @@
 					if($post['id']== $comment['post_id']) { ?>
 						<?php foreach ($this->pos_usr as $pos_usr) {
 							if($comment['user_id']== $pos_usr['id']) { ?>
+								<div class=" comment">
 								<div><small>  <?= $pos_usr['username'] ?></small></div>
 							<?php } ?>
 						<?php } ?>
-						<br/><textarea cols="100%" readonly="1" id="comarea" class="comarea">  <?= $comment['content'] ?> </textarea>
+						<br/><textarea readonly="readonly"  cols="100%"  id="comarea" class="comarea">  <?= $comment['content'] ?> </textarea>
 						<?php if($comment['user_id']== $user ){ ?>
-							<a class='btn btn-danger btn-xs' href='/user/commentdelete/id/<?= $comment['id']?>'>delete</a>
+							<a class='btn btn-danger btn-xs' href='/user/commentdelete/id/<?= $comment['id']?>/cid/<?=$city_id ?>'>delete</a>
 							<a class='btn btn-warning btn-xs update' id='<?= $comment['id'] ?>' >update</a>
 						<?php } ?>
+									</div>
 						<?php $comment_id= $comment['id']; ?>
 						<input type='hidden' id='cid' value='<?= $comment_id ?> '>
 					<?php } ?>

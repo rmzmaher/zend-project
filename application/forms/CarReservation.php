@@ -2,6 +2,7 @@
 
 class Application_Form_CarReservation extends Zend_Form
 {
+    static $city_id;
 
     public function init()
     {
@@ -11,12 +12,16 @@ class Application_Form_CarReservation extends Zend_Form
 
         $id =new Zend_Form_Element_Hidden('id');
 
-        $location= new Zend_Form_Element_Text('location');
+        $location = new Zend_Form_Element_Select('location');
+        $location->setAttrib('class' ,'form-control');
+        $location_obj= new Application_Model_Location();
+        //$location_obj=new Application_mode
+        $all_locations =$location_obj->getlocations_by_city_id(self::$city_id);
+        foreach ($all_locations as $key=>$value)
+        {
+            $location->addMultiOption($value['id'],$value['name']);
+        }
         $location->setLabel('Location :');
-        $location->setAttribs(array(
-            'placeholder'=>' Location',
-            'class'=>'form-control'
-        ));
 
         $from= new Zend_Form_Element_Text('from');
         $from->setLabel('From :');

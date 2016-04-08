@@ -206,6 +206,8 @@ $this->redirect("admin/login");
 
     public function gethotelsAction()
     {
+         $country_id= $this->_request->getParam("id");
+         $this->view->country=$country_id;
         $hotel_model=new Application_Model_Hotel();
         $all_hotels=$hotel_model->listAllHotels();
         $this->view->hotels=$all_hotels;
@@ -305,7 +307,7 @@ $storage->write($authAdapter->getResultRowObject(array('email', 'id',
             $adminsession->first_name =$authAdapter->getResultRowObject(array('email', 'id','name'));
 
 // redirect to root index/index
-            return $this->redirect( '/admin/list');
+            return $this->redirect( '/admin/allcountry');
 
 
 
@@ -391,9 +393,9 @@ $this->redirect("/user/login");
 
     public function showlocationAction()
     {
-        //$city_id= $this->_request->getParam("id");
+        $city_id= $this->_request->getParam("id");
         $location_obj=new Application_Model_Location();
-	$locations = $location_obj->getlocations_by_city_id(1);
+	$locations = $location_obj->getlocations_by_city_id($city_id);
 	$this->view->location=$locations;
 
 
@@ -402,9 +404,10 @@ $this->redirect("/user/login");
 
     public function deletelocationAction()
     {  $id = $this->_request->getParam('lid');
+        $cid = $this->_request->getParam('cid');
    $location_obj=new Application_Model_Location();
         $location_obj->delete_post("$id");
-         $this->redirect('/admin/showlocation');
+         $this->redirect('/admin/showlocation/id/'.$cid);
     }
 
 

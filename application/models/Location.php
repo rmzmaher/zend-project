@@ -57,8 +57,6 @@ class Application_Model_Location extends Zend_Db_Table_Abstract
 
 
 
-
-
 public function updatelocation($locationid,$locationData)
     {
 

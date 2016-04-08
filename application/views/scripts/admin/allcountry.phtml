@@ -1,5 +1,6 @@
 <br /><br />
 <div id="view-content">
+<a class="btn btn-primary navbar-btn glyphicon glyphicon-user" href="/admin/list"> USERS</a>
 	<table class="table">
 	<thead>
 		<tr>
@@ -17,14 +18,14 @@
 "<td>" . $value['name'] . "</td>" .
 "<td>" . $value['rating'] . "</td>" .
 "<td>" . $value['description'] . "</td>" .
-"<td> <a href='onecountry/id/ ".$value['id']."'class='btn btn-primary'> country details </a> </td>" .
+"<td> <a href='onecountry/id/".$value['id']."'class='btn btn-primary'> country details </a> </td>" .
 "<td> <a href='allcity/id/".$value['id']."'class='btn btn-warning'> cities</a> </td>".
 "<td> <a href='editcountry/id/".$value['id']."'class='btn btn-warning'> update</a> </td>".
 "<td> <a href='addcountry/id/".$value['id']."'class='btn btn-warning'> add country</a> </td>".
 "<td> <a href='addcity/id/".$value['id']."'class='btn btn-warning'> add city</a> </td>".
-"<td> <a href='removecountry/id/".$value['id']."'class='btn btn-danger'> Delete </a> </td>"
-
-."</tr>";
+"<td> <a href='removecountry/id/".$value['id']."'class='btn btn-danger'> Delete </a> </td>".
+"<td> <a href='/admin/gethotels/id/".$value['id']."'class='btn btn-success'> Hotels </a> </td>".
+"</tr>";
 		}
 	?>
 	</table>
