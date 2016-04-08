@@ -364,7 +364,7 @@ $this->redirect("/user/login");
                    $form = new Application_Form_Addlocation ();
 		    $user_model = new Application_Model_Location ();
 		    $id = $this->_request->getParam('lid');
-		    
+		 $cid = $this->_request->getParam('cid');
 		   $user_data = $user_model-> getlocation_by_locationid($id)[0];
 
 
@@ -382,7 +382,7 @@ $this->redirect("/user/login");
 		         
 		    $user_model-> updatelocation ($id, $_POST);
 		   
-		   $this->redirect('/admin/showlocation');
+		   $this->redirect('/admin/showlocation/id/'.$cid);
     }
 
 
@@ -403,15 +403,29 @@ $this->redirect("/user/login");
     }
 
     public function deletelocationAction()
-    {  $id = $this->_request->getParam('lid');
+    {
+$id = $this->_request->getParam('lid');
         $cid = $this->_request->getParam('cid');
    $location_obj=new Application_Model_Location();
         $location_obj->delete_post("$id");
          $this->redirect('/admin/showlocation/id/'.$cid);
     }
 
+    public function unblockAction()
+    {
+        
+$user_model = new Application_Model_User();
+	$us_id = $this->_request->getParam("uid");
+	$user = $user_model->unblockUser($us_id);
+	$this->redirect("/admin/list");
+
+
+    }
+
 
 }
+
+
 
 
 

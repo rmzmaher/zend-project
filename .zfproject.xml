@@ -71,6 +71,7 @@
           <actionMethod actionName="updatelocation"/>
           <actionMethod actionName="showlocation"/>
           <actionMethod actionName="deletelocation"/>
+          <actionMethod actionName="unblock"/>
         </controllerFile>
       </controllersDirectory>
       <formsDirectory>
@@ -291,6 +292,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="User">
             <viewScriptFile forActionName="editcomment"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Admin">
+            <viewScriptFile forActionName="unblock"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>

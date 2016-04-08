@@ -58,5 +58,14 @@ return $this->find($userid)->toArray();
 }
 */
 
+function unblockUser($userid)
+{
+    $userdata['active']=1;
+    $this->update($userdata,"id=$userid");
+}
+
+
+
+
 }
 

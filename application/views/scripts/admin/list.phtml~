@@ -2,3 +2,23 @@
 <div id="view-content">
 	<p>View script for controller <b>Admin</b> and script/action name <b>list</b></p>
 </div>
+
+
+
+<table class="table table-bordered">
+<?php
+foreach($this->user as $key => $value)
+{
+echo "<tr>".
+"<td>" . $value['id']
+. "</td>" .
+"<td>" . $value['email'] . "</td>" .
+"<td>" . $value['username'] . "</td>" .
+"<td>" . $value['active'] . "</td>" .
+"<td> <a class='btn btn-danger' href='block/uid/".$value['id']."'> block </a>".
+"<td> <a class='btn btn-danger' href='unblock/uid/".$value['id']."'> block </a>".
+
+"</tr>";
+}
+?>
+</table>
