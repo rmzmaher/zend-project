@@ -165,8 +165,9 @@ Zend_Session::namespaceUnset('admin_Auth');
         // action body
         $comment_obj=new Application_Model_Comment();
         $id=$this->_request->getParam('id');
+        $city_id=$this->_request->getparam('cid');
         $comment_obj->delete_comment($id);
-        $this->redirect('/user/postr/');
+        $this->redirect('/user/postr/id/'.$cid.'');
     }
 
     public function commentcreateAction()
@@ -229,14 +230,13 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->view->paginator = $paginator;
 
     }
-/// list users won't be here in admin panel
+
     public function listAction()
     {
          $user_model = new Application_Model_User();
        $this->view->users = $user_model->listUsers();
     }
 
-    /// signup action
     public function addAction()
     {
         //$this->_helper->layout()->disableLayout(); 
@@ -257,7 +257,6 @@ Zend_Session::namespaceUnset('admin_Auth');
             $this->view->user_form = $form; 
     }
 
-// update user data
     public function editAction()
     {
             $form = new Application_Form_Edit ();
@@ -282,7 +281,6 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
     }
 
-    /// details of user
     public function detailsAction()
     {
         $user_model = new Application_Model_User();
@@ -304,7 +302,6 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->redirect("/user/list");
     }
 
-///country main page
     public function listcountryAction()
     {
         $country_obj= new Application_Model_Country();
@@ -330,8 +327,6 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->view->cities = $posts_of_user_id;
     }
 
-//city main page
-
     public function citydataAction()
     {
         // user
@@ -349,7 +344,6 @@ Zend_Session::namespaceUnset('admin_Auth');
 
     }
 
-
     public function homeAction()
     {
         $country_obj= new Application_Model_Country();
@@ -363,7 +357,6 @@ Zend_Session::namespaceUnset('admin_Auth');
         $country = new Zend_Session_Namespace('country');
         $country = $all_country;
     }
-
 
     public function makeReservationAction()
     {
@@ -399,7 +392,6 @@ Zend_Session::namespaceUnset('admin_Auth');
         }
     }
 
-//// hotel reserve
     public function getReservationsAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -412,7 +404,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $reservs=$model->getUserReservation($user_id);
         $this->view->reservers=$reservs;
     }
-/// make reservation
+
     public function makeCarReservAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -437,7 +429,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-// get car reservation
+
     public function getCarReservationAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -450,7 +442,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $rents=$carReservModel->getUserReservation($user_id);
         $this->view->rents=$rents;
     }
-/// update rent
+
     public function updateRentAction()
     {
         $auth = Zend_Auth::getInstance();
@@ -476,7 +468,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-//delete rent
+
     public function deleterentAction()
     {
 
@@ -493,7 +485,7 @@ Zend_Session::namespaceUnset('admin_Auth');
         $model->cancelReservation($rent_id);
         $this->redirect('/visit/get-car-reservation');
     }
-/// update reservation
+
     public function updateReservationAction()
     {
         $reservation_id= $this->_request->getParam("id");
@@ -531,7 +523,7 @@ Zend_Session::namespaceUnset('admin_Auth');
             }
         }
     }
-//delete reservation
+
     public function deletereservationAction()
     {
         $reservation_id= $this->_request->getParam("id");
@@ -549,16 +541,6 @@ Zend_Session::namespaceUnset('admin_Auth');
         $this->redirect("/get-reservations");
     }
 
-
-    // public function blockAction()
-    // {
-    //     $user_model = new Application_Model_User();
-    //     $us_id = $this->_request->getParam("uid");
-    //     $user = $user_model->blockUser($us_id);
-    //     $this->redirect("/user/list");
-    // }
-
-/// login function
     public function loginAction()
     {
         
@@ -719,8 +701,24 @@ Zend_Session::namespaceUnset('admin_Auth');
 
     }
 
+    public function editcommentAction()
+    {
+        // action body
+
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        $req=$this->getRequest();
+        if($req->isPost()){
+                $com_obj=new Application_Model_Comment();
+                $comment_data=$com_obj->get_one_comment($req->getParams());
+                $com_obj->update_comment($comment_data);
+            }
+    }
+
 
 }
+
+
 
 
 

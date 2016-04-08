@@ -76,9 +76,10 @@
 								<div><small>  <?= $pos_usr['username'] ?></small></div>
 							<?php } ?>
 						<?php } ?>
-						<br/><textarea readonly="1" >  <?= $comment['content'] ?> </textarea>
+						<br/><textarea cols="100%" readonly="1" id="comarea" class="comarea">  <?= $comment['content'] ?> </textarea>
 						<?php if($comment['user_id']== $user ){ ?>
 							<a class='btn btn-danger btn-xs' href='/user/commentdelete/id/<?= $comment['id']?>'>delete</a>
+							<a class='btn btn-warning btn-xs update' id='<?= $comment['id'] ?>' >update</a>
 						<?php } ?>
 						<?php $comment_id= $comment['id']; ?>
 						<input type='hidden' id='cid' value='<?= $comment_id ?> '>

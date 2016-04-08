@@ -31,7 +31,7 @@ class Application_Model_Comment extends Zend_Db_Table_Abstract
     public function get_comments(){
         return $rows=$this->fetchAll()->toArray();
     }
-    public function update_post($comment_data)
+    public function update_comment($comment_data)
     {
         $my_data['content'] = $comment_data['content'];
         $my_data['id'] = $comment_data['id'];
@@ -46,5 +46,10 @@ class Application_Model_Comment extends Zend_Db_Table_Abstract
         $this->delete("id=$id");
     }
 
+    public function get_one_comment($id)
+    {
+        $rows = $this->fetchAll("id=$id")->toArray();
+        return $rows;
+    }
 
 }
