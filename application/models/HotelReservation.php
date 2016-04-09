@@ -7,7 +7,7 @@ class Application_Model_HotelReservation extends Zend_Db_Table_Abstract
     function addReservation($data)
     {
         $row = $this->createRow();
-        $row->name=$data['name'];
+        $row->hotel_id=$data['name'];
         $row->from=$data['from'];
         $row->to=$data['to'];
         $row->member=$data['member'];
@@ -22,10 +22,10 @@ class Application_Model_HotelReservation extends Zend_Db_Table_Abstract
 
     function editReservation($data,$id)
     {
-        $custom_data['hotel_name']=$data['hotel_name'];
+        $custom_data['hotel_id']=$data['name'];
         $custom_data['from']=$data['from'];
         $custom_data['to']=$data['to'];
-        $custom_data['members']=$data['member'];
+        $custom_data['member']=$data['member'];
         $custom_data['user_id']=$data['user_id'];
         $this->update($custom_data,"id=$id");
     }

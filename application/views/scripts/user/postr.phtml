@@ -24,7 +24,9 @@
 	<?php $name=$this->name?>
 	<div align="center">
 		<h1 >Experience</h1>
+				<?php if($user) { ?>
 		<a class='btn btn-info btn-sm '  href='/user/postcreate/id/<?= $city_id ?> '> <span class="glyphicon glyphicon-plus"></span> Share Your Experience </a>
+			<?php } ?>
 	</div>
 	<?php foreach ($this->pos as $post) { ?>
 		<div class='container-fluid'>

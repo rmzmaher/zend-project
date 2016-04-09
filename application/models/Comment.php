@@ -34,12 +34,12 @@ class Application_Model_Comment extends Zend_Db_Table_Abstract
 
     public function update_comment($comment_data)
     {
-        var_dump($comment_data);die();
+       // var_dump($comment_data);die();
         $my_data['content'] = $comment_data['content'];
-        $my_data['id'] = $comment_data['id'];
-        $my_data['post_id'] = $comment_data['post_id'];
-        $my_data['user_id'] = $comment_data['user_id'];
-        $id = $comment_data['id'];
+       // $my_data['id'] = $comment_data['id'];
+       // $my_data['post_id'] = $comment_data['post_id'];
+       // $my_data['user_id'] = $comment_data['user_id'];
+        $id = $comment_data['comment_id'];
         $this->update($my_data, "id=$id");
     }
 // delete a comment

@@ -370,11 +370,12 @@ class UserController extends Zend_Controller_Action
         $user_id=$user->id;
         $id=$this->_request->getParam('cid');
         ///reservation form
+        Application_Form_HotelReservation::$city_id=$id;
         $HreservForm=new Application_Form_HotelReservation();
-        $HreservForm->setId($id);
-        $HreservForm->setHotels();
+        
         ////
         $this->view->hotelreservform=$HreservForm;
+
         //$user_id= $this->_request->getParam("id");
 
         /////////////////////
@@ -382,6 +383,7 @@ class UserController extends Zend_Controller_Action
         $hotelReservation_model = new Application_Model_HotelReservation();
         if($request->isPost()){
             if($HreservForm->isValid($request->getPost())){
+
                 $data['name']=$_POST['name'];
                 $data['from']=$_POST['from'];
                 $data['to']=$_POST['to'];
@@ -389,7 +391,7 @@ class UserController extends Zend_Controller_Action
                 $data['user_id']=$user_id;
                 $hotelReservation_model->addReservation($data);
               //  $redirect="/user/get-reservations/id/".$user_id;
-                $this->redirect("/user/get-reservations");
+                $this->redirect("/user/get-reservations/id/".$user_id);
 
             }
         }
@@ -505,10 +507,11 @@ class UserController extends Zend_Controller_Action
         $auth = Zend_Auth::getInstance();
         $storage = $auth->getStorage();
         $sessionRead = $storage->read();
+        //$user_id=5;
         if (!empty($sessionRead))
         {
             $user_name = $sessionRead->user_name;
-            $user_id=$sessionRead->user_id;
+            $user_id=$sessionRead->id;
         }
 
 
@@ -521,10 +524,9 @@ class UserController extends Zend_Controller_Action
                 $data['from']=$_POST['from'];
                 $data['to']=$_POST['to'];
                 $data['member']=$_POST['member'];
-
                 $data['user_id']=$user_id;
                 $model->editReservation($data,$reservation_id);
-                $this->redirect("/get-reservations");
+                $this->redirect("/user/get-reservations/id/".$user_id);
             }
         }
     }
@@ -564,8 +566,8 @@ class UserController extends Zend_Controller_Action
                 $authAdapter = new Zend_Auth_Adapter_DbTable($db, 'user', "email", 'passwd');
                 $authAdapter->setIdentity($email);
                 $authAdapter->setCredential($password);
-                //$select = $authAdapter->getDbSelect();
-                //$select->where('active = 1');
+                $select = $authAdapter->getDbSelect();
+                $select->where('active = 1');
                 //authenticate
                 $result = $authAdapter->authenticate();
 
@@ -590,8 +592,8 @@ class UserController extends Zend_Controller_Action
         }
 
         $fb = new Facebook\Facebook([
-            'app_id' => '1053124444745810', // Replace {app-id} with your app id
-            'app_secret' => 'f59c1160c1b299e2201e223fd09cdb85',
+            'app_id' => '1778202572464438', // Replace {app-id} with your app id
+            'app_secret' => 'e19b8fdb0b7e6643bbe3fec1d2d287b9',
             'default_graph_version' => 'v2.2',
             ]);
             $helper = $fb->getRedirectLoginHelper();
@@ -603,8 +605,8 @@ class UserController extends Zend_Controller_Action
     public function fbAction()
     {
         $fb = new Facebook\Facebook([
-            'app_id' => '1053124444745810', // Replace {app-id} with your app id
-            'app_secret' => 'f59c1160c1b299e2201e223fd09cdb85',
+            'app_id' => '1778202572464438', // Replace {app-id} with your app id
+            'app_secret' => 'e19b8fdb0b7e6643bbe3fec1d2d287b9',
             'default_graph_version' => 'v2.2',
             ]);
 
@@ -705,16 +707,16 @@ class UserController extends Zend_Controller_Action
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         $req=$this->getRequest();
-        $comment_id=$_POST['comment_id'];
-        $content=$_POST['content'];
-        var_dump($comment_id);
+       // $comment_id=$_POST['comment_id'];
+       // $content=$_POST['content'];
+       // var_dump($comment_id);
         if($req->isPost()){
                 $com_obj=new Application_Model_Comment();
-                $comment_data=$com_obj->get_one_comment($comment_id);
-                var_dump($comment_data);
-                $comment_data['content']=$content;
-            var_dump($comment_data['content']);
-                $com_obj->update_comment($comment_data);
+         //       $comment_data=$com_obj->get_one_comment($comment_id);
+         //       var_dump($comment_data);
+           //     $comment_data['content']=$content;
+           // var_dump($comment_data['content']);
+                $com_obj->update_comment($_POST);
 
             }
     }

@@ -2,7 +2,7 @@
 
 class Application_Form_HotelReservation extends Zend_Form
 {
-    public $_id = 0;
+    static $city_id;
 
     public function init()
     {
@@ -13,6 +13,17 @@ class Application_Form_HotelReservation extends Zend_Form
         $this->setAttrib('id','newHReserv');
 
        // $id =new Zend_Form_Element_Hidden('id');
+
+        $name = new Zend_Form_Element_Select('name');
+        $name->setAttrib('class' ,'form-control');
+        $hotel_obj= new Application_Model_Hotel();
+        //$location_obj=new Application_mode
+        $all_hotels=$hotel_obj->get_hotels_by_city_id(self::$city_id);
+        foreach ($all_hotels as $key=>$value)
+        {
+            $name->addMultiOption($value['id'],$value['name']);
+        }
+        $name->setLabel('Name :');
 
         $from= new Zend_Form_Element_Text('from');
         $from->setLabel('From :');
@@ -44,6 +55,7 @@ class Application_Form_HotelReservation extends Zend_Form
         $submit->setAttrib('class','btn btn-success');
 
         $this->addElements(array(
+            $name,
             $from,
             $to,
             $member,
@@ -52,7 +64,7 @@ class Application_Form_HotelReservation extends Zend_Form
 
     }
 
-    public function setId($id){
+    /*public function setId($id){
         $this->_id = $id;
         }
 
@@ -70,6 +82,6 @@ class Application_Form_HotelReservation extends Zend_Form
         $name->setLabel("Hotel Name:");
 
         $this->addElement($name);
-    }
+    }*/
 }
 
